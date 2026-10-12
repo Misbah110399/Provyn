@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Provyn</title>
+<meta name="description" content="Provyn: evidence-backed COBOL modernization for regulated enterprises. Dependency maps, plain-English business rules and an auditable AI evidence trail, running inside your environment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#000}
+.site{--bg:#000000;--c:#FFFFFF;--soft:#FFFFFF;--ink:#000000;--head:#FFFFFF;--text:#EDEDED;--muted:#A6A6A6;--muted2:#8A8A8A;--panel:rgba(255,255,255,.06);--line:rgba(255,255,255,.15);--glow:rgba(255,255,255,.07);--tag:rgba(0,0,0,.88);--bad:#FF6B6B;
+  font-family:Inter,'Segoe UI',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100%;overflow:hidden;transition:background .4s}
+.site a{color:var(--soft)}
+.glass{background:var(--panel);border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12);-webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%)}
+.cta{display:inline-block;color:var(--ink)!important;background:var(--c);text-decoration:none;font-weight:700;border:0;cursor:pointer;transition:filter .2s,transform .2s}
+.cta:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.ghost{display:inline-block;color:var(--head)!important;text-decoration:none;font-weight:600;border:1px solid var(--line)}
+.ghost:hover{border-color:var(--c)}
+.hl{color:var(--c)}
+.eyebrow{margin:0 0 14px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--soft);letter-spacing:.02em}
+.h2{margin:0 0 14px;font-size:44px;line-height:1.08;font-weight:800;letter-spacing:-.035em;color:var(--head)}
+.lead{margin:0 0 48px;font-size:18px;line-height:1.6;color:var(--muted);max-width:660px}
+.sec{padding:120px 0 20px}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.chip{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text);border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:var(--panel)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none}
+.card{border-radius:24px;padding:28px}
+.card h3{margin:16px 0 8px;font-size:19px;font-weight:700;color:var(--head)}
+.card p{margin:0;font-size:15px;line-height:1.6;color:var(--muted)}
+/* decode lens */
+.decode{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;border-radius:28px;overflow:hidden}
+.code{padding:26px 0;border-right:1px solid var(--line);background:rgba(0,0,0,.25)}
+.codehead{display:flex;justify-content:space-between;gap:12px;padding:0 24px 16px;font-size:12px;color:var(--muted2)}
+.ln{display:block;padding:3px 24px;cursor:default;border-left:3px solid transparent;outline:none}
+.ln .row{display:flex;gap:18px;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.75;white-space:pre;color:var(--text)}
+.ln .no{color:var(--muted2);width:22px;text-align:right;flex:none}
+.ln.flag .row code{color:var(--head)}
+.ln:hover,.ln:focus-visible{background:var(--glow);border-left-color:var(--c)}
+.ln .kw{color:var(--soft)}
+.exp{position:absolute;top:26px;right:28px;width:calc(46.5% - 56px);opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;pointer-events:none}
+.ln:hover .exp,.ln:focus .exp{opacity:1;transform:none}
+.exp-default{opacity:1;transform:none}
+.decode:has(.ln:hover) .exp-default,.decode:has(.ln:focus) .exp-default{opacity:0}
+.exp h4{margin:0 0 10px;font-size:22px;line-height:1.25;font-weight:800;letter-spacing:-.02em;color:var(--head)}
+.exp p{margin:0 0 16px;font-size:15.5px;line-height:1.65;color:var(--muted)}
+.exp .tags{display:flex;flex-wrap:wrap;gap:8px}
+.exp .warn{border-color:var(--c);color:var(--head)}
+/* dispositions */
+.tile{border-radius:16px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:13px}
+.t-conv{background:var(--c);color:var(--ink);font-weight:600}
+.t-sme{border:1.5px solid var(--c);color:var(--head)}
+.t-unb{border:1.5px dashed var(--c);color:var(--head)}
+.t-ret{border:1px dashed var(--line);color:var(--muted2);text-decoration:line-through}
+/* ledger */
+.ledger input{position:absolute;opacity:0;width:1px;height:1px}
+.tswitch{display:inline-flex;align-items:center;gap:12px;cursor:pointer;font-size:15px;color:var(--text);user-select:none}
+.tswitch .track{width:46px;height:26px;border-radius:999px;border:1px solid var(--line);background:var(--panel);position:relative;transition:background .2s}
+.tswitch .track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:transform .2s,background .2s}
+.ledger input:checked + .tswitch .track{background:rgba(255,107,107,.18);border-color:var(--bad)}
+.ledger input:checked + .tswitch .track::after{transform:translateX(20px);background:var(--bad)}
+.ledger input:focus-visible + .tswitch .track{outline:2px solid var(--c);outline-offset:3px}
+.rec{border-radius:20px;padding:20px;position:relative}
+.rec dl{margin:12px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px}
+.rec dt{color:var(--muted2);font-family:'JetBrains Mono',monospace;font-size:12px}
+.rec dd{margin:0;color:var(--text)}
+.hash{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--soft)}
+.alt{display:none}
+.ok-txt{color:var(--soft)}
+.bad-txt{display:none;color:var(--bad)}
+.ledger:has(input:checked) .r2 .orig{display:none}
+.ledger:has(input:checked) .r2 .alt{display:inline;color:var(--bad);font-weight:600}
+.ledger:has(input:checked) .broken{border-color:var(--bad)!important}
+.ledger:has(input:checked) .broken .hash.prev{color:var(--bad)}
+.ledger:has(input:checked) .ok-txt{display:none}
+.ledger:has(input:checked) .bad-txt{display:inline}
+.link{display:flex;align-items:center;justify-content:center;color:var(--muted2);font-family:'JetBrains Mono',monospace;font-size:18px}
+.ledger:has(input:checked) .link.cut{color:var(--bad)}
+/* faq */
+details{border-top:1px solid var(--line);padding:22px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:24px;font-size:19px;font-weight:700;color:var(--head)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:400;color:var(--c);font-size:24px;line-height:1}
+details[open] summary::after{content:"−"}
+details p{margin:14px 0 0;font-size:16px;line-height:1.7;color:var(--muted);max-width:820px}
+summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radius:6px}
+/* form */
+.field{width:100%;box-sizing:border-box;font:inherit;font-size:16px;color:var(--head);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.field:focus{outline:2px solid var(--c);outline-offset:2px}
+.field::placeholder{color:var(--muted2)}
+.site a:focus-visible,.site button:focus-visible{outline:2px solid var(--c);outline-offset:3px}
+.navlink{color:var(--muted)!important;text-decoration:none;font-size:14px;padding:12px 12px;border-radius:12px}
+.navlink:hover{color:var(--head)!important}
+@media (max-width:860px){
+  .h2{font-size:34px}
+  .decode{grid-template-columns:1fr;padding-bottom:330px}
+  .code{border-right:0;border-bottom:1px solid var(--line)}
+  .exp{top:auto;bottom:24px;left:24px;right:24px;width:auto}
+  .navlinks{display:none!important}
+}
+@media (max-width:760px){
+  .hero{height:auto!important;padding:92px 0 24px}
+  .hpanel{position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;margin:400px auto 0}
+  .h1{font-size:38px!important}
+  .chip-hint,.navcta{display:none!important}
+}
+@media (prefers-reduced-motion:reduce){.cta,.exp,.tswitch .track::after{transition:none}}
+</style>
+<style>html{scroll-behavior:smooth}</style>
+</head>
+<body>
+<div class="site">
+
+<!-- ============ HERO ============ -->
+<div class="hero" style="position: relative; height: 900px; touch-action: pan-y; background: radial-gradient(1100px 620px at 50% 30%, var(--glow), transparent 65%)" id="hero">
+  <canvas id="wm-gl" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none"></canvas>
+  <canvas id="wm-fx" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none"></canvas>
+
+  <nav class="glass" aria-label="Main" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: min(1180px, calc(100% - 32px)); box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 10px 9px 22px; border-radius: 22px; z-index: 3">
+    <a href="#top" style="color: var(--head); text-decoration: none; font-weight: 800; font-size: 20px; letter-spacing: -0.02em">Provyn</a>
+    <div class="navlinks" style="display: flex; gap: 2px; align-items: center">
+      <a class="navlink" href="#decode">See it read code</a>
+      <a class="navlink" href="#plan">The plan</a>
+      <a class="navlink" href="#evidence">Evidence</a>
+      <a class="navlink" href="#security">Security</a>
+      <a class="navlink" href="#faq">FAQ</a>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center">
+      <a href="#contact" class="cta navcta" style="font-size: 14px; padding: 12px 18px; border-radius: 14px; white-space: nowrap">Book a demo</a>
+    </div>
+  </nav>
+
+  <div id="top" class="hpanel" style="position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%); width: min(1180px, calc(100% - 32px)); z-index: 2; display: grid; gap: 12px">
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center">
+      <span class="chip"><span class="dot"></span>Live demo · sample loan-servicing system</span>
+      <span class="chip chip-hint" style="color: var(--muted)">Point at any program to see what a change would touch</span>
+    </div>
+    <div class="glass" style="border-radius: 30px; padding: 32px 40px; display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: flex-end; justify-content: space-between">
+      <div style="flex: 1 1 500px">
+        <p class="eyebrow">Legacy system intelligence for regulated enterprises</p>
+        <h1 class="h1" style="margin: 0; font-size: 52px; line-height: 1.03; font-weight: 800; letter-spacing: -0.04em; color: var(--head)">Modernize COBOL with <span class="hl">proof</span>, not promises.</h1>
+      </div>
+      <div style="flex: 1 1 340px; max-width: 470px">
+        <p style="margin: 0 0 20px; font-size: 17px; line-height: 1.6; color: var(--muted)">Provyn maps every dependency, reads the business rules buried in your code, and records every AI decision in an audit trail your risk team can verify. It runs inside your environment.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px">
+          <a href="#contact" class="cta" style="padding: 15px 24px; border-radius: 16px">Book a demo</a>
+          <a href="#decode" class="ghost" style="padding: 15px 24px; border-radius: 16px">See it read real code</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="max-width: 1180px; margin: 0 auto; padding: 0 24px">
+
+  <!-- ============ COVERAGE ============ -->
+  <section aria-label="What Provyn reads" style="padding: 56px 0 0">
+    <p class="mono" style="margin: 0 0 16px; font-size: 12px; color: var(--muted2); text-align: center">READS WHAT YOUR MAINFRAME ACTUALLY RUNS</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center">
+      <span class="chip">COBOL</span><span class="chip">Copybooks</span><span class="chip">JCL &amp; PROCs</span><span class="chip">CICS</span><span class="chip">DB2 SQL</span><span class="chip">IMS DL/I</span><span class="chip">IBM MQ</span><span class="chip">VSAM</span><span class="chip">CICS CSD</span><span class="chip">DB2 DDL</span>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
+  <section class="sec" aria-labelledby="p-h">
+    <p class="eyebrow">The problem</p>
+    <h2 id="p-h" class="h2" style="max-width: 820px">The rules that run your business live in code nobody wants to touch.</h2>
+    <p class="lead">Interest calculations, delinquency notices, escrow shortages. Decades of decisions written in COBOL, usually documented nowhere else.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px">
+      <div class="glass card">
+        <p class="mono" style="color: var(--c); font-size: 13px">01</p>
+        <h3>The experts are leaving</h3>
+        <p>The people who know why a program does what it does are retiring, and their knowledge leaves with them.</p>
+      </div>
+      <div class="glass card">
+        <p class="mono" style="color: var(--c); font-size: 13px">02</p>
+        <h3>Nobody can see the blast radius</h3>
+        <p>One copybook can feed dozens of programs. Without a map, every change is a guess and every estimate is padded.</p>
+      </div>
+      <div class="glass card">
+        <p class="mono" style="color: var(--c); font-size: 13px">03</p>
+        <h3>AI alone is not auditable</h3>
+        <p>A model can translate code, but regulators ask who checked it, against what, and how you know it behaves the same.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DECODE LENS ============ -->
+  <section id="decode" class="sec" aria-labelledby="d-h">
+    <p class="eyebrow">See it read code</p>
+    <h2 id="d-h" class="h2">Point at a line. Read it in plain English.</h2>
+    <p class="lead">This is LNCALC1, the interest program from a sample loan-servicing system. Provyn explains every line, finds the business rules, and cites the exact file and line for each one.</p>
+
+    <div class="decode glass">
+      <div class="code">
+        <div class="codehead mono"><span>LNCALC1.cbl · Compute monthly interest due</span><span>COBOL · called subprogram</span></div>
+
+        <div class="ln" tabindex="0"><div class="row"><span class="no">18</span><code>    <span class="kw">COPY</span> LNMASTR.</code></div>
+          <div class="exp"><p class="eyebrow">Line 18 · shared layout</p><h4>Pulls in the loan master record.</h4><p>The same layout is copied by LNPAY01, LNDLQ01 and LNINQ01. Change a field here and all four programs change with it. Provyn shows that before anyone edits a line.</p><div class="tags"><span class="chip">Source LNCALC1.cbl:18</span><span class="chip">Blast radius · 4 programs</span></div></div></div>
+
+        <div class="ln" tabindex="0"><div class="row"><span class="no">20</span><code><span class="kw">PROCEDURE DIVISION USING</span> LOAN-MASTER-REC LK-INTEREST.</code></div>
+          <div class="exp"><p class="eyebrow">Line 20 · who calls this</p><h4>Called by LNPAY01, the nightly payment run.</h4><p>LNPAY01 calls it through a variable, WS-CALC-PGM, not a literal name. Simple text search misses that. Provyn traces the value back to resolve the call.</p><div class="tags"><span class="chip">Caller LNPAY01.cbl:80</span><span class="chip">Dynamic CALL resolved</span></div></div></div>
+
+        <div class="ln" tabindex="0"><div class="row"><span class="no">22</span><code>    <span class="kw">ACCEPT</span> WS-TODAY <span class="kw">FROM DATE</span></code></div>
+          <div class="exp"><p class="eyebrow">Line 22</p><h4>Reads today’s date, with a two-digit year.</h4><p>COBOL’s DATE gives YYMMDD, so the century has to be guessed. The next block does exactly that.</p><div class="tags"><span class="chip">Source LNCALC1.cbl:22</span></div></div></div>
+
+        <div class="ln flag" tabindex="0">
+          <div class="row"><span class="no">23</span><code>    <span class="kw">IF</span> WS-TODAY-YY &lt; 50</code></div>
+          <div class="row"><span class="no">24</span><code>       <span class="kw">MOVE</span> 20 <span class="kw">TO</span> WS-CENTURY</code></div>
+          <div class="row"><span class="no">25</span><code>    <span class="kw">ELSE</span></code></div>
+          <div class="row"><span class="no">26</span><code>       <span class="kw">MOVE</span> 19 <span class="kw">TO</span> WS-CENTURY</code></div>
+          <div class="row"><span class="no">27</span><code>    <span class="kw">END-IF</span></code></div>
+          <div class="exp"><p class="eyebrow">Lines 23–27 · business rule · timing</p><h4>Years 00–49 are read as 20xx, 50–99 as 19xx.</h4><p>A century window left over from Y2K. It works today, but from 2050 this program will think it is 1950. That goes straight into the risk register.</p><div class="tags"><span class="chip warn">Risk · fails in 2050</span><span class="chip">Rule · LNCALC1.cbl:23</span></div></div></div>
+
+        <div class="ln" tabindex="0"><div class="row"><span class="no">28</span><code>    <span class="kw">COMPUTE</span> WS-MONTHLY-RATE = LM-NOTE-RATE / 1200</code></div>
+          <div class="exp"><p class="eyebrow">Line 28</p><h4>Turns the yearly rate into a monthly one.</h4><p>The note rate is stored as a percentage, so dividing by 1,200 gives a monthly decimal. A 6.000% loan becomes 0.005 a month.</p><div class="tags"><span class="chip">Source LNCALC1.cbl:28</span></div></div></div>
+
+        <div class="ln" tabindex="0"><div class="row"><span class="no">29</span><code>    <span class="kw">COMPUTE</span> LK-INTEREST <span class="kw">ROUNDED</span> =</code></div><div class="row"><span class="no"></span><code>        LM-PRIN-BAL * WS-MONTHLY-RATE</code></div>
+          <div class="exp"><p class="eyebrow">Line 29</p><h4>Interest due = balance × monthly rate.</h4><p>Rounded to the cent. On a $200,000 balance at 6%, that is $1,000.00 for the month. The new system must round the same way, and the tests check it.</p><div class="tags"><span class="chip">Source LNCALC1.cbl:29</span><span class="chip">Test case generated</span></div></div></div>
+
+        <div class="ln flag" tabindex="0">
+          <div class="row"><span class="no">30</span><code>    <span class="kw">IF</span> LK-INTEREST &gt; LM-PI-PMT</code></div>
+          <div class="row"><span class="no">31</span><code>       <span class="kw">MOVE</span> LM-PI-PMT <span class="kw">TO</span> LK-INTEREST</code></div>
+          <div class="row"><span class="no">32</span><code>    <span class="kw">END-IF</span></code></div>
+          <div class="exp"><p class="eyebrow">Lines 30–32 · business rule · money</p><h4>Interest is never more than the scheduled payment.</h4><p>If the interest would be bigger than the P&amp;I payment, it is capped. What happens to the difference? The code doesn’t say, so Provyn asks the business owner to confirm before anything is converted.</p><div class="tags"><span class="chip warn">Owner must confirm</span><span class="chip">Rule · LNCALC1.cbl:30</span></div></div></div>
+
+        <div class="ln" tabindex="0"><div class="row"><span class="no">33</span><code>    <span class="kw">GOBACK</span>.</code></div>
+          <div class="exp"><p class="eyebrow">Line 33</p><h4>Hands the interest back to LNPAY01.</h4><p>LNPAY01 then posts the payment to the loan master. Together the two form the recommended pilot: contained, batch, and easy to prove record by record.</p><div class="tags"><span class="chip">Pilot · LNPAY01 + LNCALC1</span></div></div></div>
+      </div>
+      <div style="min-height: 420px" aria-hidden="true"></div>
+      <div class="exp exp-default"><p class="eyebrow">Plain-English reading</p><h4>Point at any line of code on the left.</h4><p>Every explanation here came from reading the source. Nothing was executed. The two lines marked as rules land in the business rules catalog, where their owners confirm them before conversion.</p><div class="tags"><span class="chip">12 rules found in the estate</span><span class="chip">Every claim cites a line</span></div></div>
+    </div>
+  </section>
+
+  <!-- ============ PLAN ============ -->
+  <section id="plan" class="sec" aria-labelledby="pl-h">
+    <p class="eyebrow">The assessment</p>
+    <h2 id="pl-h" class="h2">Every program gets a decision, and a reason.</h2>
+    <p class="lead">From a sample loan-servicing assessment: eight programs, 381 lines, four copybooks, two batch jobs and three online transactions, all turned into a plan an executive can sign.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px">
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">Convert · 3</p><div style="display: grid; gap: 8px; margin-top: 16px"><span class="tile t-conv">LNINQ01</span><span class="tile t-conv">LNMENU</span><span class="tile t-conv">LNPAYH1</span></div><p style="margin-top: 16px">Translate with AI, then prove it with old-versus-new testing.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">Convert with expert review · 3</p><div style="display: grid; gap: 8px; margin-top: 16px"><span class="tile t-sme">LNCALC1</span><span class="tile t-sme">LNESC01</span><span class="tile t-sme">LNPAY01</span></div><p style="margin-top: 16px">Money rules inside. A business expert confirms them before sign-off.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">Unblock first · 1</p><div style="display: grid; gap: 8px; margin-top: 16px"><span class="tile t-unb">LNDLQ01</span></div><p style="margin-top: 16px">Calls a program whose source wasn’t supplied. We ask for it before scoping.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">Confirm and retire · 1</p><div style="display: grid; gap: 8px; margin-top: 16px"><span class="tile t-ret">LNOLD99</span></div><p style="margin-top: 16px">Nothing calls it. Confirm with run history, then drop it from scope.</p></div>
+    </div>
+
+    <h3 style="margin: 72px 0 24px; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--head)">A roadmap where each stage proves the last</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px">
+      <div style="border-top: 2px dashed var(--line); padding-top: 20px"><p class="mono" style="margin: 0; font-size: 13px; color: var(--muted2)">STAGE 0</p><h4 style="margin: 8px 0; font-size: 19px; color: var(--head)">Close the gaps</h4><p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted)">Answer the open questions so LNDLQ01 and LNOLD99 can be scoped or removed.</p></div>
+      <div style="border-top: 2px solid var(--c); padding-top: 20px"><p class="mono" style="margin: 0; font-size: 13px; color: var(--c)">STAGE 1 · PILOT</p><h4 style="margin: 8px 0; font-size: 19px; color: var(--head)">LNPAY01 + LNCALC1</h4><p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted)">Proven by running old and new on the same input and comparing LOANMAST and PAYREJ record by record.</p></div>
+      <div style="border-top: 2px solid var(--line); padding-top: 20px"><p class="mono" style="margin: 0; font-size: 13px; color: var(--muted2)">STAGE 2</p><h4 style="margin: 8px 0; font-size: 19px; color: var(--head)">Online screens and services</h4><p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted)">Terminal screens become services and a web front end, proven by replaying recorded journeys.</p></div>
+      <div style="border-top: 2px solid var(--line); padding-top: 20px"><p class="mono" style="margin: 0; font-size: 13px; color: var(--muted2)">STAGE 3</p><h4 style="margin: 8px 0; font-size: 19px; color: var(--head)">Expert-reviewed core</h4><p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted)">Programs with sensitive rules, converted only after their owners sign off the rules catalog.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ EVIDENCE LEDGER ============ -->
+  <section id="evidence" class="sec" aria-labelledby="e-h">
+    <p class="eyebrow">The evidence layer</p>
+    <h2 id="e-h" class="h2">Every AI decision leaves a receipt.</h2>
+    <p class="lead">Each output is linked to its source lines, the prompt version, the model and the person who approved it. Records are hash-chained, so a quiet edit anywhere breaks the chain.</p>
+
+    <div class="ledger glass" style="border-radius: 28px; padding: 32px">
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 24px">
+        <p class="mono" style="margin: 0; font-size: 14px"><span class="ok-txt">✓ Chain verified · 4 of 4 records intact</span><span class="bad-txt">✕ Tampering detected at record 0142 · 2 records after it can’t be trusted</span></p>
+        <input id="tamper" type="checkbox"><label for="tamper" class="tswitch"><span class="track"></span>Try editing a record</label>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 10px; align-items: stretch; overflow-x: auto">
+        <div class="rec glass" style="min-width: 210px"><p class="mono" style="margin: 0; font-size: 12px; color: var(--muted2)">RECORD 0141</p><p style="margin: 6px 0 0; font-weight: 700; color: var(--head)">Program profile · LNCALC1</p>
+          <dl><dt>source</dt><dd>LNCALC1.cbl:1–33</dd><dt>prompt</dt><dd>profile v1.3</dd><dt>review</dt><dd>Tech lead ✓</dd><dt>prev</dt><dd class="hash prev">9c1e…04af</dd><dt>hash</dt><dd class="hash">3b7d…e912</dd></dl></div>
+        <div class="link" aria-hidden="true">→</div>
+        <div class="rec glass r2 broken" style="min-width: 210px"><p class="mono" style="margin: 0; font-size: 12px; color: var(--muted2)">RECORD 0142</p><p style="margin: 6px 0 0; font-weight: 700; color: var(--head)">Rule · <span class="orig">interest capped at P&amp;I</span><span class="alt">interest not capped</span></p>
+          <dl><dt>source</dt><dd>LNCALC1.cbl:30</dd><dt>prompt</dt><dd>rules v2.0</dd><dt>review</dt><dd>Lending SME ✓</dd><dt>prev</dt><dd class="hash prev">3b7d…e912</dd><dt>hash</dt><dd class="hash"><span class="orig">a04f…71c3</span><span class="alt">recomputed ≠ a04f…71c3</span></dd></dl></div>
+        <div class="link cut" aria-hidden="true">→</div>
+        <div class="rec glass broken" style="min-width: 210px"><p class="mono" style="margin: 0; font-size: 12px; color: var(--muted2)">RECORD 0143</p><p style="margin: 6px 0 0; font-weight: 700; color: var(--head)">Dependency · LNPAY01 → LNCALC1</p>
+          <dl><dt>source</dt><dd>LNPAY01.cbl:80</dd><dt>method</dt><dd>parser, no AI</dd><dt>review</dt><dd>Tech lead ✓</dd><dt>prev</dt><dd class="hash prev">a04f…71c3</dd><dt>hash</dt><dd class="hash">58e2…0bd4</dd></dl></div>
+        <div class="link cut" aria-hidden="true">→</div>
+        <div class="rec glass broken" style="min-width: 210px"><p class="mono" style="margin: 0; font-size: 12px; color: var(--muted2)">RECORD 0144</p><p style="margin: 6px 0 0; font-weight: 700; color: var(--head)">Plan · pilot wave approved</p>
+          <dl><dt>scope</dt><dd>LNPAY01, LNCALC1</dd><dt>basis</dt><dd>0141–0143</dd><dt>review</dt><dd>Program owner ✓</dd><dt>prev</dt><dd class="hash prev">58e2…0bd4</dd><dt>hash</dt><dd class="hash">c7a9…2f10</dd></dl></div>
+      </div>
+      <p style="margin: 20px 0 0; font-size: 13px; color: var(--muted2)">Illustration. In the product, anyone on your side can run the verification and export the full ledger for audit.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOW WE WORK ============ -->
+  <section class="sec" aria-labelledby="h-h">
+    <p class="eyebrow">How we work</p>
+    <h2 id="h-h" class="h2">Start small and fixed-price. Each step earns the next.</h2>
+    <p class="lead">No big-bang rewrite. You see the plan before you commit to any change.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px">
+      <div class="glass card" style="border-top: 2px solid var(--c)"><p class="mono" style="margin: 0; font-size: 13px; color: var(--c)">01 · ASSESSMENT</p><h3>A plan you can sign</h3><p>Dependency map, plain-English profiles, rules catalog, risk register and a phased roadmap.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">02 · PILOT</p><h3>One module, proven</h3><p>Old and new run on the same data. Every difference is explained or fixed.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">03 · PROGRAM</p><h3>Wave by wave</h3><p>The roadmap delivered in stages, with evidence for every change.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">04 · PLATFORM</p><h3>Your team runs it</h3><p>License Provyn and keep modernizing in-house, with our support.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ SECURITY / DEPLOY ============ -->
+  <section id="security" class="sec" aria-labelledby="s-h">
+    <p class="eyebrow">Security</p>
+    <h2 id="s-h" class="h2">Your code never leaves your walls.</h2>
+    <p class="lead">Provyn installs into your own Kubernetes cluster with Helm, AKS first. The AI it uses is the Azure OpenAI deployment in your own tenant.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; align-items: stretch">
+      <div style="border: 1.5px dashed var(--c); border-radius: 28px; padding: 24px; position: relative">
+        <p class="mono" style="margin: 0 0 18px; font-size: 12px; color: var(--c)">YOUR CLOUD TENANT</p>
+        <div class="glass" style="border-radius: 20px; padding: 20px">
+          <p class="mono" style="margin: 0 0 14px; font-size: 12px; color: var(--muted2)">KUBERNETES · YOUR CLUSTER</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px">
+            <div class="tile t-sme" style="text-decoration: none">Provyn API</div>
+            <div class="tile t-sme">Analysis workers</div>
+            <div class="tile t-sme">Postgres + pgvector</div>
+            <div class="tile t-sme">Evidence ledger</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; margin: 14px 0">
+          <span class="mono" style="color: var(--c)">↕</span><span class="mono" style="font-size: 12px; color: var(--muted2)">private endpoint · managed identity</span>
+        </div>
+        <div class="tile t-conv" style="text-align: center">Your Azure OpenAI deployment</div>
+      </div>
+      <ul style="margin: 0; padding: 0; list-style: none; display: grid; gap: 18px; align-content: center; font-size: 16px; color: var(--text)">
+        <li style="display: flex; gap: 14px"><span class="dot" style="margin-top: 8px"></span><span><strong style="color: var(--head)">No code leaves.</strong> Network policy limits outbound traffic to your own AI endpoint.</span></li>
+        <li style="display: flex; gap: 14px"><span class="dot" style="margin-top: 8px"></span><span><strong style="color: var(--head)">Nothing is executed.</strong> The assessment reads source exports only. No mainframe access needed.</span></li>
+        <li style="display: flex; gap: 14px"><span class="dot" style="margin-top: 8px"></span><span><strong style="color: var(--head)">Humans sign off.</strong> No AI output is final until a named expert approves it.</span></li>
+        <li style="display: flex; gap: 14px"><span class="dot" style="margin-top: 8px"></span><span><strong style="color: var(--head)">Repeatable.</strong> Same code in, same plan out, every time.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ SAMPLE + WHO ============ -->
+  <section id="sample" class="sec" aria-labelledby="sa-h">
+    <div class="glass" style="border-radius: 32px; padding: 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 36px; align-items: center">
+      <div>
+        <p class="eyebrow">Proof on real banking code</p>
+        <h2 id="sa-h" class="h2" style="font-size: 38px">We ran Provyn on AWS CardDemo.</h2>
+        <p style="margin: 0 0 24px; font-size: 17px; line-height: 1.65; color: var(--muted)">An open-source card-banking application built to look like a real mainframe estate. Download the full modernization plan it produced.</p>
+        <a href="#" class="cta" style="padding: 16px 26px; border-radius: 16px">Download the sample plan</a>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+        <div style="border-top: 1px solid var(--line); padding-top: 14px"><p style="margin: 0; font-size: 44px; font-weight: 800; letter-spacing: -0.04em; color: var(--head)">44</p><p style="margin: 4px 0 0; font-size: 14px; color: var(--muted)">COBOL programs</p></div>
+        <div style="border-top: 1px solid var(--line); padding-top: 14px"><p style="margin: 0; font-size: 44px; font-weight: 800; letter-spacing: -0.04em; color: var(--head)">~22.9k</p><p style="margin: 4px 0 0; font-size: 14px; color: var(--muted)">lines of code</p></div>
+        <div style="border-top: 1px solid var(--line); padding-top: 14px; grid-column: span 2"><p style="margin: 0 0 10px; font-size: 14px; color: var(--muted)">Technologies mapped</p><div style="display: flex; flex-wrap: wrap; gap: 8px"><span class="chip">CICS</span><span class="chip">DB2</span><span class="chip">IMS</span><span class="chip">MQ</span><span class="chip">VSAM</span><span class="chip">JCL</span></div></div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 18px">
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 12px; color: var(--soft)">BUILT FOR</p><h3>Banks</h3><p>Core banking, cards and payments batch.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 12px; color: var(--soft)">BUILT FOR</p><h3>Mortgage servicers</h3><p>Payment posting, escrow and delinquency.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 12px; color: var(--soft)">BUILT FOR</p><h3>Insurers</h3><p>Policy admin, rating and claims.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 12px; color: var(--soft)">BUILT FOR</p><h3>Utilities</h3><p>Billing, metering and customer accounts.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" class="sec" aria-labelledby="f-h">
+    <p class="eyebrow">Questions</p>
+    <h2 id="f-h" class="h2" style="margin-bottom: 36px">What risk and IT teams ask first</h2>
+    <details><summary>Does our code leave our environment?</summary><p>No. Provyn runs in your Kubernetes cluster, and the only AI it calls is the Azure OpenAI deployment in your own tenant. We can work inside your environment under your access controls.</p></details>
+    <details><summary>What if the AI gets something wrong?</summary><p>Every statement cites the file and line it came from, so a reviewer can check it in seconds. Nothing is final until a named expert signs it off, and converted code is proven by running old and new on the same data.</p></details>
+    <details><summary>Do you need access to our mainframe?</summary><p>No. For the assessment we need an export of the source: programs, copybooks, JCL, CICS definitions and DB2 DDL. Nothing is executed.</p></details>
+    <details><summary>What do we get at the end of the assessment?</summary><p>A modernization plan as a PDF and an interactive page: a decision for every program, a phased roadmap, the dependency map, the business rules catalog, a risk register and the evidence ledger behind it all.</p></details>
+    <details><summary>How is it priced?</summary><p>The assessment is a fixed price agreed upfront, based on the size of the estate. Pilots and programs are scoped from the plan, so you always know what the next step costs before you commit.</p></details>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" style="padding: 120px 0 120px">
+    <div class="glass" style="border-radius: 32px; padding: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 44px">
+      <div>
+        <p class="eyebrow">Get in touch</p>
+        <h2 class="h2">Let’s look at your <span class="hl">estate</span>.</h2>
+        <p style="margin: 0 0 24px; font-size: 17px; line-height: 1.65; color: var(--muted)">Tell us what you run and what you want to change. We’ll reply within one business day, and can run the demo on a sample of your code.</p>
+        <p style="margin: 0; font-size: 15px; color: var(--muted)">Prefer email? <a href="mailto:[YOUR EMAIL]">[YOUR EMAIL]</a></p>
+      </div>
+      <form style="display: grid; gap: 16px" aria-label="Contact Provyn">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px">
+          <div style="display: grid; gap: 8px"><label for="c-name" style="font-size: 14px; color: var(--muted)">Name</label><input id="c-name" class="field" type="text" autocomplete="name"></div>
+          <div style="display: grid; gap: 8px"><label for="c-email" style="font-size: 14px; color: var(--muted)">Work email</label><input id="c-email" class="field" type="email" autocomplete="email"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px">
+          <div style="display: grid; gap: 8px"><label for="c-co" style="font-size: 14px; color: var(--muted)">Company</label><input id="c-co" class="field" type="text" autocomplete="organization"></div>
+          <div style="display: grid; gap: 8px"><label for="c-size" style="font-size: 14px; color: var(--muted)">Estate size</label><select id="c-size" class="field"><option>Not sure yet</option><option>Under 100 programs</option><option>100 to 1,000 programs</option><option>Over 1,000 programs</option></select></div>
+        </div>
+        <div style="display: grid; gap: 8px"><label for="c-msg" style="font-size: 14px; color: var(--muted)">What are you modernizing?</label><textarea id="c-msg" class="field" rows="4" placeholder="Platform, business area, timeline…"></textarea></div>
+        <button type="button" class="cta" style="justify-self: start; font: inherit; font-weight: 700; font-size: 16px; border-radius: 16px; padding: 15px 26px">Send message</button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<footer style="border-top: 1px solid var(--line); padding: 28px 24px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; max-width: 1180px; margin: 0 auto; font-size: 14px; color: var(--muted2)">
+  <span><strong style="color: var(--head)">Provyn</strong> · Evidence-backed legacy modernization</span>
+  <span class="mono" style="font-size: 12px">Explainable · Testable · Auditable</span>
+</footer>
+</div>
+<script>
+class DCLogic {}
+class Component extends DCLogic {
+  renderVals() {
+    if (!this._fn) {
+      this._fn = {
+        setHost: (el) => { this.host = el; },
+        setGL: (el) => { this.glCanvas = el; },
+        setFx: (el) => { this.fxCanvas = el; },
+        setPanel: (el) => { this.panel = el; },
+        onMove: (e) => {
+          if (!this.host || !this.wm) return;
+          var r = this.host.getBoundingClientRect();
+          if (r.width <= 0 || r.height <= 0) return;
+          var x = e.clientX - r.left, y = e.clientY - r.top, m = this.mouse;
+          if (m.active) { m.vx = x - m.x; m.vy = y - m.y; }
+          m.x = x; m.y = y; m.active = true;
+          this.wm.hasPointer = true;
+          this.wm.target.x = x / r.width;
+          this.wm.target.y = 1 - y / r.height;
+        },
+        onLeave: () => {
+          this.mouse.active = false; this.mouse.x = -9999; this.mouse.y = -9999;
+          if (this.wm) this.wm.hasPointer = false;
+        }
+      };
+    }
+    return this._fn;
+  }
+
+  componentDidMount() {
+    this.mouse = { x: -9999, y: -9999, vx: 0, vy: 0, active: false };
+    this.calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this.cfg = { text: 'Provyn', font: 'normal 900 PXpx Inter, system-ui, sans-serif', spacing: '-0.03em', reach: 300, handleSize: 118, spread: 0.27, shift: 90 };
+    this.theme = { c: [1, 1, 1], hex: '#FFFFFF', soft: '#FFFFFF', tag: 'rgba(0,0,0,.88)', head: '#FFFFFF' };
+    var W = this.wm = { target: { x: -0.5, y: 0.5 }, eased: { x: -0.5, y: 0.5 }, cells: [], verts: [], hasPointer: false, clock: 0, drift: 0, ratioW: 1, ratioH: 1, key: '', px: 200 };
+    for (var i = 0; i < 3; i++) { W.cells.push({ x: -0.5, y: 0.5 }); W.verts.push({ x: -0.5, y: 0.5 }); }
+    this.t = 0; this.frameNo = 0; this.dirty = true;
+    this.buildGraph();
+    this.initGL();
+    var self = this;
+    if (document.fonts && document.fonts.load) {
+      var again = function () { if (self.wm) self.wm.key = ''; };
+      document.fonts.load('900 64px Inter', 'Provyn').then(again, again);
+      document.fonts.ready.then(again, function () {});
+    }
+    this.last = 0;
+    this.tick = function (now) {
+      var dt = self.last ? Math.min(0.1, (now - self.last) / 1000) : 0;
+      self.last = now;
+      self.frame(dt);
+      self.raf = requestAnimationFrame(self.tick);
+    };
+    this.raf = requestAnimationFrame(this.tick);
+    if (window.ResizeObserver && this.host) {
+      this.ro = new ResizeObserver(function () { self.dirty = true; });
+      this.ro.observe(this.host);
+      if (this.panel) this.ro.observe(this.panel);
+    }
+  }
+
+  componentWillUnmount() { cancelAnimationFrame(this.raf); if (this.ro) this.ro.disconnect(); this.wm = null; }
+
+  readTheme() {
+    if (!this.host || !window.getComputedStyle) return;
+    var cs = getComputedStyle(this.host);
+    var hex = (cs.getPropertyValue('--c') || '').trim();
+    if (hex && hex !== this.theme.hex && /^#[0-9a-fA-F]{6}$/.test(hex)) {
+      this.theme.hex = hex;
+      this.theme.c = [parseInt(hex.slice(1, 3), 16) / 255, parseInt(hex.slice(3, 5), 16) / 255, parseInt(hex.slice(5, 7), 16) / 255];
+    }
+    var soft = (cs.getPropertyValue('--soft') || '').trim(); if (soft) this.theme.soft = soft;
+    var tag = (cs.getPropertyValue('--tag') || '').trim(); if (tag) this.theme.tag = tag;
+  }
+
+  rgba(a) { var c = this.theme.c; return 'rgba(' + Math.round(c[0] * 255) + ',' + Math.round(c[1] * 255) + ',' + Math.round(c[2] * 255) + ',' + a + ')'; }
+
+  // ================= Dependency graph (replaces the strings) =================
+  buildGraph() {
+    // id, type, x (0-1), y (0-1 of the free area), note
+    var N = [
+      ['LNDAILY', 'jcl', 0.07, 0.20], ['LNESCRW', 'jcl', 0.09, 0.70],
+      ['PAYMENTS.SORTED', 'data', 0.13, 0.45, 1],
+      ['LNPAY01', 'pgm', 0.25, 0.28], ['LNDLQ01', 'pgm', 0.23, 0.82],
+      ['LNPAYR', 'cpy', 0.33, 0.48, 1], ['LNCALC1', 'pgm', 0.40, 0.12],
+      ['LNESC01', 'pgm', 0.30, 0.63], ['LNFMT01', 'missing', 0.37, 0.95],
+      ['ESCROW_ANALYSIS', 'db2', 0.45, 0.76, 1], ['LNMASTR', 'cpy', 0.51, 0.40],
+      ['LOAN.MASTER', 'data', 0.57, 0.88], ['LNOLD99', 'dead', 0.48, 1.0],
+      ['LNCOMM', 'cpy', 0.61, 0.10, 1], ['LNINQ01', 'pgm', 0.66, 0.46],
+      ['LNMENU', 'pgm', 0.77, 0.22], ['LNPAYH1', 'pgm', 0.73, 0.74],
+      ['PAYMENT_HIST', 'db2', 0.85, 0.92, 1], ['LNMENUT', 'cpy', 0.93, 0.36, 1],
+      ['LN00', 'txn', 0.88, 0.08], ['LNIQ', 'txn', 0.92, 0.62]
+    ];
+    var E = [
+      ['LNDAILY', 'LNPAY01'], ['LNDAILY', 'LNDLQ01'], ['LNDAILY', 'PAYMENTS.SORTED'], ['PAYMENTS.SORTED', 'LNPAY01'],
+      ['LNPAY01', 'LNCALC1'], ['LNPAY01', 'LNPAYR'], ['LNPAY01', 'LNMASTR'], ['LNCALC1', 'LNMASTR'],
+      ['LNDLQ01', 'LNMASTR'], ['LNDLQ01', 'LNFMT01'], ['LNESCRW', 'LNESC01'], ['LNESC01', 'ESCROW_ANALYSIS'],
+      ['LNPAY01', 'LOAN.MASTER'], ['LNDLQ01', 'LOAN.MASTER'], ['LNINQ01', 'LOAN.MASTER'],
+      ['LNINQ01', 'LNMASTR'], ['LNINQ01', 'LNCOMM'], ['LNMENU', 'LNCOMM'], ['LNMENU', 'LNINQ01'],
+      ['LNMENU', 'LNPAYH1'], ['LNMENU', 'LNMENUT'], ['LNPAYH1', 'PAYMENT_HIST'], ['LN00', 'LNMENU'], ['LNIQ', 'LNINQ01']
+    ];
+    var idx = {};
+    this.nodes = N.map(function (n, i) { idx[n[0]] = i; return { id: n[0], type: n[1], fx: n[2], fy: n[3], minor: !!n[4], x: 0, y: 0, vx: 0, vy: 0, hx: 0, hy: 0, hl: 0.3, phase: i * 1.7, w: 0 }; });
+    this.edges = E.map(function (e) { return [idx[e[0]], idx[e[1]]]; });
+    this.adj = this.nodes.map(function () { return []; });
+    for (var k = 0; k < this.edges.length; k++) { var a = this.edges[k][0], b = this.edges[k][1]; this.adj[a].push(b); this.adj[b].push(a); }
+    this.pulses = [];
+    this.focus = -1; this.depth = null;
+    this.idleSeq = ['LNMASTR', 'LNPAY01', 'LNMENU', 'LOAN.MASTER', 'LNESC01', 'LNDAILY', 'LNINQ01', 'LNOLD99'].map(function (s) { return idx[s]; });
+    this.idleI = 0; this.idleT = 0;
+    this.dust = [];
+    for (var d = 0; d < 46; d++) { var s1 = Math.sin(d * 91.7) * 43758.5; s1 -= Math.floor(s1); var s2 = Math.sin(d * 37.3) * 24634.6; s2 -= Math.floor(s2); this.dust.push({ fx: s1, fy: s2, r: 0.6 + (d % 3) * 0.5, ph: d }); }
+  }
+
+  layoutGraph() {
+    var top = this.w < 760 ? 100 : 112, bottom = this.h - 260;
+    if (this.panel && this.host) {
+      var pr = this.panel.getBoundingClientRect(), hr = this.host.getBoundingClientRect();
+      bottom = pr.top - hr.top - 34;
+    }
+    if (bottom < top + 160) bottom = top + 160;
+    this.narrow = this.w < 760;
+    var padX = this.narrow ? 56 : Math.max(60, this.w * 0.04);
+    this.cfg.shift = this.h / 2 - ((top + bottom) / 2 + 20);
+    for (var i = 0; i < this.nodes.length; i++) {
+      var n = this.nodes[i];
+      n.hx = padX + n.fx * (this.w - padX * 2);
+      n.hy = top + n.fy * (bottom - top);
+      if (!n.x) { n.x = n.hx; n.y = n.hy; }
+      n.hidden = this.narrow && (n.minor || n.type === 'txn' || n.type === 'jcl' || n.type === 'missing' || n.type === 'dead');
+    }
+  }
+
+  setFocus(i) {
+    if (i === this.focus) return;
+    this.focus = i;
+    var depth = this.nodes.map(function () { return -1; });
+    if (i >= 0) {
+      depth[i] = 0; var q = [i];
+      while (q.length) { var u = q.shift(); if (depth[u] >= 2) continue; for (var k = 0; k < this.adj[u].length; k++) { var v = this.adj[u][k]; if (depth[v] < 0) { depth[v] = depth[u] + 1; q.push(v); } } }
+      if (!this.calm) for (var e = 0; e < this.edges.length; e++) {
+        var a = this.edges[e][0], b = this.edges[e][1];
+        if (depth[a] >= 0 && depth[b] >= 0 && Math.abs(depth[a] - depth[b]) === 1) {
+          var from = depth[a] < depth[b] ? 0 : 1;
+          this.pulses.push({ e: e, dir: from === 0 ? 1 : -1, t: -Math.min(depth[a], depth[b]) * 0.45, sp: 1.6, strong: true });
+        }
+      }
+    }
+    this.depth = depth;
+  }
+
+  graphStep(dt) {
+    var m = this.mouse, R = 120;
+    // pick focus
+    if (m.active) {
+      var best = -1, bd = 70;
+      for (var i = 0; i < this.nodes.length; i++) { var n = this.nodes[i]; if (n.hidden) continue; var d = Math.hypot(n.x - m.x, n.y - m.y); if (d < bd) { bd = d; best = i; } }
+      if (best >= 0) this.setFocus(best);
+      this.idleT = 0;
+    } else {
+      this.idleT += dt;
+      if (this.focus < 0 || this.idleT > 2.8) { this.idleT = 0; this.idleI = (this.idleI + 1) % this.idleSeq.length; this.setFocus(this.idleSeq[this.idleI]); }
+    }
+    for (var j = 0; j < this.nodes.length; j++) {
+      var p = this.nodes[j];
+      var bob = this.calm ? 0 : 4;
+      var tx = p.hx + Math.sin(this.t * 0.6 + p.phase) * bob, ty = p.hy + Math.cos(this.t * 0.5 + p.phase) * bob * 0.7;
+      p.vx += (tx - p.x) * 0.035; p.vy += (ty - p.y) * 0.035;
+      if (m.active) {
+        var dx = p.x - m.x, dy = p.y - m.y, dd = Math.sqrt(dx * dx + dy * dy);
+        if (dd < R && dd > 0.01) { var f = Math.pow(1 - dd / R, 2); p.vx += (dx / dd) * f * 5 + m.vx * f * 0.25; p.vy += (dy / dd) * f * 5 + m.vy * f * 0.25; }
+      }
+      p.vx *= 0.84; p.vy *= 0.84; p.x += p.vx; p.y += p.vy;
+      var dep = this.depth ? this.depth[j] : -1;
+      var target = dep === 0 ? 1 : dep === 1 ? 0.85 : dep === 2 ? 0.55 : 0.2;
+      p.hl += (target - p.hl) * Math.min(1, dt * 6);
+    }
+    m.vx *= 0.6; m.vy *= 0.6;
+    // ambient data flow
+    if (!this.calm && Math.random() < dt * 2.2) this.pulses.push({ e: Math.floor(Math.random() * this.edges.length), dir: Math.random() < 0.5 ? 1 : -1, t: 0, sp: 0.6 + Math.random() * 0.4, strong: false });
+    for (var k = this.pulses.length - 1; k >= 0; k--) { var pu = this.pulses[k]; pu.t += dt * pu.sp; if (pu.t > 1) this.pulses.splice(k, 1); }
+  }
+
+  ctrl(a, b) {
+    var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, dx = b.x - a.x, dy = b.y - a.y;
+    return { x: mx - dy * 0.12, y: my + dx * 0.12 };
+  }
+
+  graphDraw(ctx) {
+    var T = this.theme, nodes = this.nodes;
+    // dust
+    for (var d = 0; d < this.dust.length; d++) {
+      var s = this.dust[d];
+      ctx.globalAlpha = 0.25 + 0.2 * Math.sin(this.t * 0.8 + s.ph);
+      ctx.fillStyle = T.soft; ctx.beginPath(); ctx.arc(s.fx * this.w, 90 + s.fy * (this.h * 0.62), s.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    // edges
+    for (var e = 0; e < this.edges.length; e++) {
+      var a = nodes[this.edges[e][0]], b = nodes[this.edges[e][1]];
+      if (a.hidden || b.hidden) continue;
+      var h = Math.min(a.hl, b.hl), c = this.ctrl(a, b);
+      ctx.strokeStyle = this.rgba(0.10 + 0.75 * h * h);
+      ctx.lineWidth = h > 0.8 ? 1.6 : 1;
+      ctx.setLineDash(a.type === 'missing' || b.type === 'missing' ? [4, 5] : []);
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.quadraticCurveTo(c.x, c.y, b.x, b.y); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    // pulses
+    for (var k = 0; k < this.pulses.length; k++) {
+      var pu = this.pulses[k]; if (pu.t < 0) continue;
+      var A = nodes[this.edges[pu.e][0]], B = nodes[this.edges[pu.e][1]];
+      if (A.hidden || B.hidden) continue;
+      var q = pu.dir > 0 ? pu.t : 1 - pu.t, C = this.ctrl(A, B), u = 1 - q;
+      var px = u * u * A.x + 2 * u * q * C.x + q * q * B.x, py = u * u * A.y + 2 * u * q * C.y + q * q * B.y;
+      ctx.shadowColor = T.hex; ctx.shadowBlur = pu.strong ? 14 : 8;
+      ctx.fillStyle = pu.strong ? T.head : this.rgba(0.7);
+      ctx.beginPath(); ctx.arc(px, py, pu.strong ? 3 : 1.8, 0, 6.283); ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+    // nodes
+    var types = { pgm: 'PGM', cpy: 'CPY', jcl: 'JOB', data: 'VSAM', db2: 'DB2', txn: 'TXN', missing: 'PGM ?', dead: 'PGM' };
+    ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i]; if (n.hidden) continue;
+      var big = n.type === 'pgm' || n.type === 'jcl' || n.type === 'txn';
+      ctx.font = (big ? '600 12px' : '500 11px') + ' "JetBrains Mono", ui-monospace, monospace';
+      var tl = types[n.type];
+      var lw = ctx.measureText(n.id).width;
+      ctx.font = '500 9px "JetBrains Mono", ui-monospace, monospace';
+      var tw = ctx.measureText(tl).width;
+      var W = lw + tw + 30, H = big ? 28 : 24;
+      n.w = W;
+      var x = n.x - W / 2, y = n.y - H / 2, hl = n.hl;
+      var isFocus = i === this.focus;
+      ctx.fillStyle = isFocus ? T.hex : T.tag;
+      ctx.strokeStyle = this.rgba(0.25 + 0.75 * hl);
+      ctx.lineWidth = isFocus ? 1.5 : 1;
+      ctx.setLineDash(n.type === 'missing' || n.type === 'dead' ? [3, 3] : []);
+      ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, W, H, 8); else ctx.rect(x, y, W, H);
+      ctx.fill(); ctx.stroke(); ctx.setLineDash([]);
+      var ink = isFocus ? (T.hex === '#FFFFFF' ? '#000000' : '#FFFFFF') : null;
+      ctx.globalAlpha = isFocus ? 1 : 0.35 + 0.65 * hl;
+      ctx.fillStyle = ink || T.soft; ctx.font = '500 9px "JetBrains Mono", ui-monospace, monospace';
+      ctx.fillText(tl, x + 10, n.y + 0.5);
+      ctx.fillStyle = ink || '#FFFFFF'; ctx.font = (big ? '600 12px' : '500 11px') + ' "JetBrains Mono", ui-monospace, monospace';
+      ctx.fillText(n.id, x + 18 + tw, n.y + 0.5);
+      ctx.globalAlpha = 1;
+    }
+    // readout for focus
+    if (this.focus >= 0 && this.depth) {
+      var f = nodes[this.focus], cnt = 0, pg = 0;
+      for (var z = 0; z < nodes.length; z++) if (z !== this.focus && this.depth[z] >= 0) { cnt++; if (nodes[z].type === 'pgm') pg++; }
+      var names = { pgm: 'program', cpy: 'copybook', jcl: 'batch job', data: 'dataset', db2: 'DB2 table', txn: 'CICS transaction', missing: 'called program', dead: 'program' };
+      var l1 = f.id + ' · ' + names[f.type];
+      var l2 = f.type === 'dead' ? 'No caller found · retire candidate' : f.type === 'missing' ? 'Source not supplied · ask the client' : 'A change here touches ' + cnt + ' components · ' + pg + ' programs';
+      ctx.font = '600 12px "JetBrains Mono", ui-monospace, monospace';
+      var bw = Math.max(ctx.measureText(l1).width, ctx.measureText(l2).width) + 28;
+      var bx = f.x + f.w / 2 + 14, by = f.y - 50;
+      if (bx + bw > this.w - 12) bx = f.x - f.w / 2 - 14 - bw;
+      if (by < 96) by = f.y + 22;
+      if (bx < 8) bx = 8;
+      ctx.fillStyle = T.tag; ctx.strokeStyle = this.rgba(0.9); ctx.lineWidth = 1;
+      ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, 50, 10); else ctx.rect(bx, by, bw, 50); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#FFFFFF'; ctx.fillText(l1, bx + 14, by + 17);
+      ctx.fillStyle = T.soft; ctx.font = '500 11px "JetBrains Mono", ui-monospace, monospace'; ctx.fillText(l2, bx + 14, by + 35);
+    }
+  }
+
+  // ================= WebGL wordmark =================
+  initGL() {
+    var c = this.glCanvas; if (!c) return;
+    var attrs = { alpha: true, antialias: false, depth: false, stencil: false, premultipliedAlpha: true };
+    var gl = c.getContext('webgl2', attrs) || c.getContext('webgl', attrs);
+    if (!gl) { this.gl = null; return; }
+    this.isGL2 = (typeof WebGL2RenderingContext !== 'undefined') && (gl instanceof WebGL2RenderingContext);
+    var VERT = 'attribute vec2 aPos; varying vec2 vUv; void main(){ vUv = aPos*0.5+0.5; gl_Position = vec4(aPos,0.0,1.0); }';
+    var FRAG = [
+      'precision highp float;',
+      'uniform sampler2D uMap; uniform vec2 uRes; uniform vec2 uAtlas; uniform vec2 uPtr; uniform float uReach;',
+      'uniform vec3 uCol; uniform vec4 uAccent; uniform vec2 uV0; uniform vec2 uV1; uniform vec2 uV2; uniform float uHalf; uniform float uShift;',
+      'varying vec2 vUv;',
+      'float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }',
+      'vec2 blurRG(vec2 uv, float e){ vec4 s = vec4(0.0); for(int i=0;i<6;i++){ float fi=float(i); float th=radians(fi/6.0*360.0); vec2 dir=vec2(cos(th),sin(th)); vec2 off=dir*(hash(vec2(fi,uv.x+uv.y))+e); s+=texture2D(uMap, uv+off*e);} return (s/6.0).rg; }',
+      'vec2 segment(vec2 p, vec2 a, vec2 b){ vec2 ab=b-a; vec2 ap=p-a; float t=clamp(dot(ap,ab)/max(dot(ab,ab),1e-8),0.0,1.0); return vec2(length(ap-ab*t),t); }',
+      'float stroke(float d, float lw, float px){ return 1.0-smoothstep(lw,lw+px,d); }',
+      'float dashedLine(vec2 p, vec2 a, vec2 b, float lw, float px){ vec2 s=segment(p,a,b); float dash=step(0.5,fract(s.y*length(b-a)*100.0)); return stroke(s.x,lw,px)*dash; }',
+      'float boxEdge(vec2 p, vec2 c, float h, float lw, float px){ vec2 q=abs(p-c)-vec2(h); float d=length(max(q,0.0))+min(max(q.x,q.y),0.0); return stroke(abs(d),lw,px); }',
+      'void main(){',
+      '  float aspect = uRes.x/uRes.y;',
+      '  vec2 E = (vUv*uRes - (uRes-uAtlas)*0.5 - vec2(0.0,uShift)) / uAtlas;',
+      '  float inside = step(0.0,E.x)*step(E.x,1.0)*step(0.0,E.y)*step(E.y,1.0);',
+      '  vec2 safeUv = clamp(E,0.0,1.0);',
+      '  float b = clamp(1.0-E.y*3.5,0.0,1.0)*0.008;',
+      '  vec2 soft = blurRG(safeUv,b); vec2 sharp = blurRG(safeUv,b*0.1);',
+      '  float d = length((vUv-uPtr)/vec2(1.0,aspect));',
+      '  float k = 1.0-pow(smoothstep(0.0,max(uReach,1e-4),d),3.0);',
+      '  float mask = mix(soft.r, sharp.g*1.4, k)*inside*0.82;',
+      '  vec3 fill = mix(uCol*0.45, min(uCol*1.1+0.06, vec3(1.0)), smoothstep(0.0,1.0,E.y));',
+      '  fill = mix(fill, min(uCol*1.3+0.15, vec3(1.0)), k*0.4);',
+      '  vec2 P = vec2(vUv.x*aspect, vUv.y); float px = 1.0/uRes.y; float lw = px*0.35;',
+      '  float lines = max(max(dashedLine(P,uV0,uV1,lw,px), dashedLine(P,uV1,uV2,lw,px)), dashedLine(P,uV2,uV0,lw,px));',
+      '  float boxes = max(max(boxEdge(P,uV0,uHalf,lw,px), boxEdge(P,uV1,uHalf,lw,px)), boxEdge(P,uV2,uHalf,lw,px));',
+      '  float A = max(lines,boxes)*uAccent.a*clamp(1.15-vUv.y,0.0,1.0);',
+      '  vec4 card = vec4(fill*mask, mask);',
+      '  vec4 comp = vec4(uAccent.rgb*A, A) + card*(1.0-A);',
+      '  gl_FragColor = comp*pow(clamp(E.y+0.15,0.0,1.0),0.6);',
+      '}'
+    ].join('\n');
+    var make = function (type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+    var p = gl.createProgram();
+    gl.attachShader(p, make(gl.VERTEX_SHADER, VERT)); gl.attachShader(p, make(gl.FRAGMENT_SHADER, FRAG));
+    gl.bindAttribLocation(p, 0, 'aPos'); gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) { this.gl = null; return; }
+    var names = ['uMap', 'uRes', 'uAtlas', 'uPtr', 'uReach', 'uCol', 'uAccent', 'uV0', 'uV1', 'uV2', 'uHalf', 'uShift'];
+    var U = {}; for (var i = 0; i < names.length; i++) U[names[i]] = gl.getUniformLocation(p, names[i]);
+    var quad = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0); gl.disable(gl.BLEND);
+    var tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 255]));
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    this.gl = gl; this.prog = p; this.U = U; this.tex = tex;
+  }
+
+  setFont(ctx, px) { ctx.font = this.cfg.font.replace('PX', String(Math.round(px))); try { if ('letterSpacing' in ctx) ctx.letterSpacing = this.cfg.spacing; } catch (e) {} }
+
+  fitFontPx() {
+    var probe = this.probe || (this.probe = document.createElement('canvas').getContext('2d'));
+    this.setFont(probe, 100);
+    var wr = (probe.measureText(this.cfg.text).width + 24) / 100;
+    return Math.max(40, Math.min(this.w * 0.94 / wr, this.h * 0.62));
+  }
+
+  buildAtlas(px) {
+    var probe = this.probe || (this.probe = document.createElement('canvas').getContext('2d'));
+    var text = this.cfg.text, self = this;
+    var measure = function (fp) { self.setFont(probe, fp); var m = probe.measureText(text); return { w: Math.max(1, m.width), asc: m.actualBoundingBoxAscent || fp * 0.8, desc: m.actualBoundingBoxDescent || fp * 0.22 }; };
+    var fpx = Math.max(8, px * this.dpr), m = measure(fpx), pad = fpx * 0.12;
+    var over = Math.max((m.w + pad * 2) / 4096, (m.asc + m.desc + pad * 2) / 4096);
+    if (over > 1) { fpx = Math.max(8, fpx / over); m = measure(fpx); pad = fpx * 0.12; }
+    var w = Math.max(1, Math.ceil(m.w + pad * 2)), h = Math.max(1, Math.ceil(m.asc + m.desc + pad * 2));
+    var cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+    var ctx = cv.getContext('2d'); if (!ctx) return null;
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+    this.setFont(ctx, fpx); ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left'; ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = '#ff0000'; ctx.fillText(text, pad, pad + m.asc);
+    var block = m.asc + m.desc;
+    ctx.strokeStyle = '#00ff00'; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.lineWidth = Math.max(1, block * 5 / 440); ctx.setLineDash([0, Math.max(2, block * 12 / 440)]);
+    ctx.strokeText(text, pad, pad + m.asc);
+    var cssPer = px / fpx;
+    return { canvas: cv, cssW: w * cssPer, cssH: h * cssPer };
+  }
+
+  resize() {
+    var h = this.host; if (!h) return false;
+    var r = h.getBoundingClientRect(); if (r.width < 10) return false;
+    this.w = r.width; this.h = r.height; this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var bw = Math.round(r.width * this.dpr), bh = Math.round(r.height * this.dpr);
+    if (this.glCanvas) { this.glCanvas.width = bw; this.glCanvas.height = bh; }
+    if (this.fxCanvas) { this.fxCanvas.width = bw; this.fxCanvas.height = bh; this.ctx = this.fxCanvas.getContext('2d'); this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0); }
+    this.bufW = bw; this.bufH = bh;
+    this.layoutGraph();
+    if (this.wm) this.wm.key = '';
+    return true;
+  }
+
+  sync() {
+    if (this.dirty) { if (this.resize()) this.dirty = false; else return false; }
+    var W = this.wm, px = this.fitFontPx(); W.px = px;
+    var key = this.cfg.text + '|' + this.dpr + '|' + Math.ceil(px / 48);
+    if (key !== W.key) {
+      W.key = key;
+      var atlas = this.buildAtlas(px);
+      if (atlas) {
+        W.ratioW = Math.max(1e-4, atlas.cssW / px); W.ratioH = Math.max(1e-4, atlas.cssH / px);
+        var gl = this.gl;
+        if (gl) {
+          gl.bindTexture(gl.TEXTURE_2D, this.tex); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, atlas.canvas);
+          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+          var cw = atlas.canvas.width, ch = atlas.canvas.height, pot = (cw & (cw - 1)) === 0 && (ch & (ch - 1)) === 0;
+          if (this.isGL2 || pot) { gl.generateMipmap(gl.TEXTURE_2D); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR); }
+          else gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        }
+      }
+    }
+    return true;
+  }
+
+  snap(x, y, cw, ch) {
+    var cx = Math.floor(x / cw), cy = Math.floor(y / ch), found = [];
+    for (var i = -1; i <= 1; i++) for (var j = -1; j <= 1; j++) { var px = (cx + i + 0.5) * cw, py = (cy + j + 0.5) * ch; found.push({ x: px, y: py, d: Math.hypot(px - x, py - y) }); }
+    found.sort(function (a, b) { return a.d - b.d; });
+    for (var k = 0; k < 3; k++) { this.wm.cells[k].x = found[k + 1].x; this.wm.cells[k].y = found[k + 1].y; }
+  }
+
+  wmStep(dt) {
+    var W = this.wm, cw = this.cfg.spread, ch = cw * 0.6, aspect = this.w / this.h, rate = this.calm ? 0.25 : 1;
+    if (!W.hasPointer) {
+      var band = (W.ratioH * W.px) / this.h;
+      W.target.x += dt * 0.5 * rate;
+      W.target.y = (1 - band) / 2 + 0.28 * band + this.cfg.shift / this.h;
+      if (W.target.x > 1.5) { W.target.x = -0.5; W.eased.x = -0.5; }
+      W.clock += dt; if (W.clock >= 0.2) { W.clock = 0; this.snap(W.target.x * aspect, W.target.y, cw, ch); }
+    } else this.snap(W.target.x * aspect, W.target.y, cw, ch);
+    var damp = Math.min(1, Math.max(0, 12 * dt));
+    W.eased.x += (W.target.x - W.eased.x) * damp; W.eased.y += (W.target.y - W.eased.y) * damp;
+    W.drift += dt * rate;
+    for (var i = 0; i < 3; i++) {
+      var c = W.cells[i], sx = Math.round(c.x / cw - 0.5), sy = Math.round(c.y / ch - 0.5);
+      var h1 = Math.sin(sx * 127.1 + sy * 311.7) * 43758.5453; h1 -= Math.floor(h1);
+      var h2 = Math.sin(sx * 269.5 + sy * 183.3) * 43758.5453; h2 -= Math.floor(h2);
+      W.verts[i].x = c.x + 0.08 * cw * Math.sin(W.drift * 1.3 + h1 * 6.2832);
+      W.verts[i].y = c.y + 0.04 * ch * Math.sin(W.drift * 1.69 + h2 * 6.2832);
+    }
+  }
+
+  glDraw() {
+    var gl = this.gl, U = this.U, W = this.wm, C = this.cfg, col = this.theme.c;
+    if (!gl) return;
+    gl.viewport(0, 0, this.bufW, this.bufH); gl.useProgram(this.prog);
+    gl.uniform1i(U.uMap, 0); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, this.tex);
+    gl.uniform2f(U.uRes, this.w, this.h);
+    gl.uniform2f(U.uAtlas, W.ratioW * W.px, W.ratioH * W.px);
+    gl.uniform2f(U.uPtr, W.eased.x, W.eased.y);
+    gl.uniform1f(U.uReach, C.reach / this.w);
+    gl.uniform3f(U.uCol, col[0], col[1], col[2]);
+    gl.uniform4f(U.uAccent, col[0], col[1], col[2], 0.55);
+    gl.uniform2f(U.uV0, W.verts[0].x, W.verts[0].y); gl.uniform2f(U.uV1, W.verts[1].x, W.verts[1].y); gl.uniform2f(U.uV2, W.verts[2].x, W.verts[2].y);
+    gl.uniform1f(U.uHalf, C.handleSize / 2 / this.h);
+    gl.uniform1f(U.uShift, C.shift);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  fxDraw() {
+    var ctx = this.ctx; if (!ctx) return;
+    var w = this.w, h = this.h, W = this.wm, C = this.cfg;
+    ctx.clearRect(0, 0, w, h);
+    if (!this.gl) {
+      ctx.save(); this.setFont(ctx, W.px); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = this.rgba(0.55); ctx.fillText(C.text, w / 2, h / 2 - C.shift); ctx.restore();
+    } else {
+      var aspect = w / h, half = C.handleSize / 2;
+      ctx.font = '500 11px "JetBrains Mono", ui-monospace, monospace'; ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+      ctx.fillStyle = this.rgba(0.6);
+      for (var i = 0; i < 3; i++) {
+        var bx = W.verts[i].x / aspect, by = W.verts[i].y; if (bx < -0.2 || bx > 1.2) continue;
+        ctx.fillText(Math.round(Math.min(100, Math.max(0, bx * 100))) + ', ' + Math.round(Math.min(100, Math.max(0, by * 100))), bx * w - half, (1 - by) * h - half - 5);
+      }
+    }
+    this.graphDraw(ctx);
+  }
+
+  frame(dt) {
+    if (!this.wm) return;
+    this.t += dt; this.frameNo++;
+    if (this.frameNo % 15 === 1) this.readTheme();
+    if (!this.sync()) return;
+    this.wmStep(dt);
+    this.glDraw();
+    this.graphStep(dt);
+    this.fxDraw();
+  }
+}
+
+(function () {
+  function start() {
+    var c = new Component(), f = c.renderVals(), host = document.getElementById('hero');
+    f.setHost(host); f.setGL(document.getElementById('wm-gl')); f.setFx(document.getElementById('wm-fx'));
+    if (f.setPanel) f.setPanel(document.getElementById('top'));
+    host.addEventListener('pointermove', f.onMove); host.addEventListener('pointerleave', f.onLeave);
+    c.componentDidMount();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+
+</script>
+</body>
+</html>
