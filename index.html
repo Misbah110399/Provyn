@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Provyn</title>
-<meta name="description" content="Provyn: evidence-backed COBOL modernization for regulated enterprises. Dependency maps, plain-English business rules and an auditable AI evidence trail, running inside your environment.">
+<title>CodeProva</title>
+<meta name="description" content="CodeProva: evidence-backed COBOL modernization for regulated enterprises. Dependency maps, plain-English business rules and an auditable AI evidence trail, running inside your environment.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
@@ -118,7 +118,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
   <canvas id="wm-fx" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none"></canvas>
 
   <nav class="glass" aria-label="Main" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: min(1180px, calc(100% - 32px)); box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 10px 9px 22px; border-radius: 22px; z-index: 3">
-    <a href="#top" style="color: var(--head); text-decoration: none; font-weight: 800; font-size: 20px; letter-spacing: -0.02em">Provyn</a>
+    <a href="#top" style="color: var(--head); text-decoration: none; font-weight: 800; font-size: 20px; letter-spacing: -0.02em">CodeProva</a>
     <div class="navlinks" style="display: flex; gap: 2px; align-items: center">
       <a class="navlink" href="#decode">See it read code</a>
       <a class="navlink" href="#plan">The plan</a>
@@ -132,8 +132,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
   </nav>
 
   <div id="top" class="hpanel" style="position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%); width: min(1180px, calc(100% - 32px)); z-index: 2; display: grid; gap: 12px">
-    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center">
-      <span class="chip"><span class="dot"></span>Live demo · sample loan-servicing system</span>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center">
       <span class="chip chip-hint" style="color: var(--muted)">Point at any program to see what a change would touch</span>
     </div>
     <div class="glass" style="border-radius: 30px; padding: 32px 40px; display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: flex-end; justify-content: space-between">
@@ -142,7 +141,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
         <h1 class="h1" style="margin: 0; font-size: 52px; line-height: 1.03; font-weight: 800; letter-spacing: -0.04em; color: var(--head)">Modernize COBOL with <span class="hl">proof</span>, not promises.</h1>
       </div>
       <div style="flex: 1 1 340px; max-width: 470px">
-        <p style="margin: 0 0 20px; font-size: 17px; line-height: 1.6; color: var(--muted)">Provyn maps every dependency, reads the business rules buried in your code, and records every AI decision in an audit trail your risk team can verify. It runs inside your environment.</p>
+        <p style="margin: 0 0 20px; font-size: 17px; line-height: 1.6; color: var(--muted)">CodeProva maps every dependency, reads the business rules buried in your code, and records every AI decision in an audit trail your risk team can verify. It runs inside your environment.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 12px">
           <a href="#contact" class="cta" style="padding: 15px 24px; border-radius: 16px">Book a demo</a>
           <a href="#decode" class="ghost" style="padding: 15px 24px; border-radius: 16px">See it read real code</a>
@@ -155,7 +154,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
 <div style="max-width: 1180px; margin: 0 auto; padding: 0 24px">
 
   <!-- ============ COVERAGE ============ -->
-  <section aria-label="What Provyn reads" style="padding: 56px 0 0">
+  <section aria-label="What CodeProva reads" style="padding: 56px 0 0">
     <p class="mono" style="margin: 0 0 16px; font-size: 12px; color: var(--muted2); text-align: center">READS WHAT YOUR MAINFRAME ACTUALLY RUNS</p>
     <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center">
       <span class="chip">COBOL</span><span class="chip">Copybooks</span><span class="chip">JCL &amp; PROCs</span><span class="chip">CICS</span><span class="chip">DB2 SQL</span><span class="chip">IMS DL/I</span><span class="chip">IBM MQ</span><span class="chip">VSAM</span><span class="chip">CICS CSD</span><span class="chip">DB2 DDL</span>
@@ -190,17 +189,17 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
   <section id="decode" class="sec" aria-labelledby="d-h">
     <p class="eyebrow">See it read code</p>
     <h2 id="d-h" class="h2">Point at a line. Read it in plain English.</h2>
-    <p class="lead">This is LNCALC1, the interest program from a sample loan-servicing system. Provyn explains every line, finds the business rules, and cites the exact file and line for each one.</p>
+    <p class="lead">This is LNCALC1, the interest program from a sample loan-servicing system. CodeProva explains every line, finds the business rules, and cites the exact file and line for each one.</p>
 
     <div class="decode glass">
       <div class="code">
         <div class="codehead mono"><span>LNCALC1.cbl · Compute monthly interest due</span><span>COBOL · called subprogram</span></div>
 
         <div class="ln" tabindex="0"><div class="row"><span class="no">18</span><code>    <span class="kw">COPY</span> LNMASTR.</code></div>
-          <div class="exp"><p class="eyebrow">Line 18 · shared layout</p><h4>Pulls in the loan master record.</h4><p>The same layout is copied by LNPAY01, LNDLQ01 and LNINQ01. Change a field here and all four programs change with it. Provyn shows that before anyone edits a line.</p><div class="tags"><span class="chip">Source LNCALC1.cbl:18</span><span class="chip">Blast radius · 4 programs</span></div></div></div>
+          <div class="exp"><p class="eyebrow">Line 18 · shared layout</p><h4>Pulls in the loan master record.</h4><p>The same layout is copied by LNPAY01, LNDLQ01 and LNINQ01. Change a field here and all four programs change with it. CodeProva shows that before anyone edits a line.</p><div class="tags"><span class="chip">Source LNCALC1.cbl:18</span><span class="chip">Blast radius · 4 programs</span></div></div></div>
 
         <div class="ln" tabindex="0"><div class="row"><span class="no">20</span><code><span class="kw">PROCEDURE DIVISION USING</span> LOAN-MASTER-REC LK-INTEREST.</code></div>
-          <div class="exp"><p class="eyebrow">Line 20 · who calls this</p><h4>Called by LNPAY01, the nightly payment run.</h4><p>LNPAY01 calls it through a variable, WS-CALC-PGM, not a literal name. Simple text search misses that. Provyn traces the value back to resolve the call.</p><div class="tags"><span class="chip">Caller LNPAY01.cbl:80</span><span class="chip">Dynamic CALL resolved</span></div></div></div>
+          <div class="exp"><p class="eyebrow">Line 20 · who calls this</p><h4>Called by LNPAY01, the nightly payment run.</h4><p>LNPAY01 calls it through a variable, WS-CALC-PGM, not a literal name. Simple text search misses that. CodeProva traces the value back to resolve the call.</p><div class="tags"><span class="chip">Caller LNPAY01.cbl:80</span><span class="chip">Dynamic CALL resolved</span></div></div></div>
 
         <div class="ln" tabindex="0"><div class="row"><span class="no">22</span><code>    <span class="kw">ACCEPT</span> WS-TODAY <span class="kw">FROM DATE</span></code></div>
           <div class="exp"><p class="eyebrow">Line 22</p><h4>Reads today’s date, with a two-digit year.</h4><p>COBOL’s DATE gives YYMMDD, so the century has to be guessed. The next block does exactly that.</p><div class="tags"><span class="chip">Source LNCALC1.cbl:22</span></div></div></div>
@@ -223,7 +222,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
           <div class="row"><span class="no">30</span><code>    <span class="kw">IF</span> LK-INTEREST &gt; LM-PI-PMT</code></div>
           <div class="row"><span class="no">31</span><code>       <span class="kw">MOVE</span> LM-PI-PMT <span class="kw">TO</span> LK-INTEREST</code></div>
           <div class="row"><span class="no">32</span><code>    <span class="kw">END-IF</span></code></div>
-          <div class="exp"><p class="eyebrow">Lines 30–32 · business rule · money</p><h4>Interest is never more than the scheduled payment.</h4><p>If the interest would be bigger than the P&amp;I payment, it is capped. What happens to the difference? The code doesn’t say, so Provyn asks the business owner to confirm before anything is converted.</p><div class="tags"><span class="chip warn">Owner must confirm</span><span class="chip">Rule · LNCALC1.cbl:30</span></div></div></div>
+          <div class="exp"><p class="eyebrow">Lines 30–32 · business rule · money</p><h4>Interest is never more than the scheduled payment.</h4><p>If the interest would be bigger than the P&amp;I payment, it is capped. What happens to the difference? The code doesn’t say, so CodeProva asks the business owner to confirm before anything is converted.</p><div class="tags"><span class="chip warn">Owner must confirm</span><span class="chip">Rule · LNCALC1.cbl:30</span></div></div></div>
 
         <div class="ln" tabindex="0"><div class="row"><span class="no">33</span><code>    <span class="kw">GOBACK</span>.</code></div>
           <div class="exp"><p class="eyebrow">Line 33</p><h4>Hands the interest back to LNPAY01.</h4><p>LNPAY01 then posts the payment to the loan master. Together the two form the recommended pilot: contained, batch, and easy to prove record by record.</p><div class="tags"><span class="chip">Pilot · LNPAY01 + LNCALC1</span></div></div></div>
@@ -291,7 +290,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
       <div class="glass card" style="border-top: 2px solid var(--c)"><p class="mono" style="margin: 0; font-size: 13px; color: var(--c)">01 · ASSESSMENT</p><h3>A plan you can sign</h3><p>Dependency map, plain-English profiles, rules catalog, risk register and a phased roadmap.</p></div>
       <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">02 · PILOT</p><h3>One module, proven</h3><p>Old and new run on the same data. Every difference is explained or fixed.</p></div>
       <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">03 · PROGRAM</p><h3>Wave by wave</h3><p>The roadmap delivered in stages, with evidence for every change.</p></div>
-      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">04 · PLATFORM</p><h3>Your team runs it</h3><p>License Provyn and keep modernizing in-house, with our support.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">04 · PLATFORM</p><h3>Your team runs it</h3><p>License CodeProva and keep modernizing in-house, with our support.</p></div>
     </div>
   </section>
 
@@ -299,14 +298,14 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
   <section id="security" class="sec" aria-labelledby="s-h">
     <p class="eyebrow">Security</p>
     <h2 id="s-h" class="h2">Your code never leaves your walls.</h2>
-    <p class="lead">Provyn installs into your own Kubernetes cluster with Helm, AKS first. The AI it uses is the Azure OpenAI deployment in your own tenant.</p>
+    <p class="lead">CodeProva installs into your own Kubernetes cluster with Helm, AKS first. The AI it uses is the Azure OpenAI deployment in your own tenant.</p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; align-items: stretch">
       <div style="border: 1.5px dashed var(--c); border-radius: 28px; padding: 24px; position: relative">
         <p class="mono" style="margin: 0 0 18px; font-size: 12px; color: var(--c)">YOUR CLOUD TENANT</p>
         <div class="glass" style="border-radius: 20px; padding: 20px">
           <p class="mono" style="margin: 0 0 14px; font-size: 12px; color: var(--muted2)">KUBERNETES · YOUR CLUSTER</p>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px">
-            <div class="tile t-sme" style="text-decoration: none">Provyn API</div>
+            <div class="tile t-sme" style="text-decoration: none">CodeProva API</div>
             <div class="tile t-sme">Analysis workers</div>
             <div class="tile t-sme">Postgres + pgvector</div>
             <div class="tile t-sme">Evidence ledger</div>
@@ -331,7 +330,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
     <div class="glass" style="border-radius: 32px; padding: 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 36px; align-items: center">
       <div>
         <p class="eyebrow">Proof on real banking code</p>
-        <h2 id="sa-h" class="h2" style="font-size: 38px">We ran Provyn on AWS CardDemo.</h2>
+        <h2 id="sa-h" class="h2" style="font-size: 38px">We ran CodeProva on AWS CardDemo.</h2>
         <p style="margin: 0 0 24px; font-size: 17px; line-height: 1.65; color: var(--muted)">An open-source card-banking application built to look like a real mainframe estate. Download the full modernization plan it produced.</p>
         <a href="#" class="cta" style="padding: 16px 26px; border-radius: 16px">Download the sample plan</a>
       </div>
@@ -354,7 +353,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
   <section id="faq" class="sec" aria-labelledby="f-h">
     <p class="eyebrow">Questions</p>
     <h2 id="f-h" class="h2" style="margin-bottom: 36px">What risk and IT teams ask first</h2>
-    <details><summary>Does our code leave our environment?</summary><p>No. Provyn runs in your Kubernetes cluster, and the only AI it calls is the Azure OpenAI deployment in your own tenant. We can work inside your environment under your access controls.</p></details>
+    <details><summary>Does our code leave our environment?</summary><p>No. CodeProva runs in your Kubernetes cluster, and the only AI it calls is the Azure OpenAI deployment in your own tenant. We can work inside your environment under your access controls.</p></details>
     <details><summary>What if the AI gets something wrong?</summary><p>Every statement cites the file and line it came from, so a reviewer can check it in seconds. Nothing is final until a named expert signs it off, and converted code is proven by running old and new on the same data.</p></details>
     <details><summary>Do you need access to our mainframe?</summary><p>No. For the assessment we need an export of the source: programs, copybooks, JCL, CICS definitions and DB2 DDL. Nothing is executed.</p></details>
     <details><summary>What do we get at the end of the assessment?</summary><p>A modernization plan as a PDF and an interactive page: a decision for every program, a phased roadmap, the dependency map, the business rules catalog, a risk register and the evidence ledger behind it all.</p></details>
@@ -368,9 +367,9 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
         <p class="eyebrow">Get in touch</p>
         <h2 class="h2">Let’s look at your <span class="hl">estate</span>.</h2>
         <p style="margin: 0 0 24px; font-size: 17px; line-height: 1.65; color: var(--muted)">Tell us what you run and what you want to change. We’ll reply within one business day, and can run the demo on a sample of your code.</p>
-        <p style="margin: 0; font-size: 15px; color: var(--muted)">Prefer email? <a href="mailto:[YOUR EMAIL]">[YOUR EMAIL]</a></p>
+        <p style="margin: 0; font-size: 15px; color: var(--muted)">Prefer email? <a href="mailto:hello@codeprova.com">hello@codeprova.com</a></p>
       </div>
-      <form style="display: grid; gap: 16px" aria-label="Contact Provyn">
+      <form style="display: grid; gap: 16px" aria-label="Contact CodeProva">
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px">
           <div style="display: grid; gap: 8px"><label for="c-name" style="font-size: 14px; color: var(--muted)">Name</label><input id="c-name" class="field" type="text" autocomplete="name"></div>
           <div style="display: grid; gap: 8px"><label for="c-email" style="font-size: 14px; color: var(--muted)">Work email</label><input id="c-email" class="field" type="email" autocomplete="email"></div>
@@ -387,7 +386,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
 </div>
 
 <footer style="border-top: 1px solid var(--line); padding: 28px 24px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; max-width: 1180px; margin: 0 auto; font-size: 14px; color: var(--muted2)">
-  <span><strong style="color: var(--head)">Provyn</strong> · Evidence-backed legacy modernization</span>
+  <span><strong style="color: var(--head)">CodeProva</strong> · Evidence-backed legacy modernization</span>
   <span class="mono" style="font-size: 12px">Explainable · Testable · Auditable</span>
 </footer>
 </div>
@@ -424,7 +423,7 @@ class Component extends DCLogic {
   componentDidMount() {
     this.mouse = { x: -9999, y: -9999, vx: 0, vy: 0, active: false };
     this.calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    this.cfg = { text: 'Provyn', font: 'normal 900 PXpx Inter, system-ui, sans-serif', spacing: '-0.03em', reach: 300, handleSize: 118, spread: 0.27, shift: 90 };
+    this.cfg = { text: 'CodeProva', font: 'normal 900 PXpx Inter, system-ui, sans-serif', spacing: '-0.03em', reach: 300, handleSize: 118, spread: 0.27, shift: 90 };
     this.theme = { c: [1, 1, 1], hex: '#FFFFFF', soft: '#FFFFFF', tag: 'rgba(0,0,0,.88)', head: '#FFFFFF' };
     var W = this.wm = { target: { x: -0.5, y: 0.5 }, eased: { x: -0.5, y: 0.5 }, cells: [], verts: [], hasPointer: false, clock: 0, drift: 0, ratioW: 1, ratioH: 1, key: '', px: 200 };
     for (var i = 0; i < 3; i++) { W.cells.push({ x: -0.5, y: 0.5 }); W.verts.push({ x: -0.5, y: 0.5 }); }
@@ -434,7 +433,7 @@ class Component extends DCLogic {
     var self = this;
     if (document.fonts && document.fonts.load) {
       var again = function () { if (self.wm) self.wm.key = ''; };
-      document.fonts.load('900 64px Inter', 'Provyn').then(again, again);
+      document.fonts.load('900 64px Inter', 'CodeProva').then(again, again);
       document.fonts.ready.then(again, function () {});
     }
     this.last = 0;
