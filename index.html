@@ -3,8 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CodeProva</title>
-<meta name="description" content="CodeProva: evidence-backed COBOL modernization for regulated enterprises. Dependency maps, plain-English business rules and an auditable AI evidence trail, running inside your environment.">
+<title>CodeProva · The proof layer for legacy modernization</title>
+<meta name="description" content="CodeProva is the proof layer for legacy modernization: it maps COBOL systems field by field and proves a modernized system gives every customer the same result, with evidence auditors accept.">
+<meta property="og:title" content="CodeProva: the proof layer for legacy modernization">
+<meta property="og:description" content="Any vendor or AI tool can convert COBOL. CodeProva proves the result is safe for every customer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
@@ -120,8 +122,9 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
   <nav class="glass" aria-label="Main" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: min(1180px, calc(100% - 32px)); box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 10px 9px 22px; border-radius: 22px; z-index: 3">
     <a href="#top" style="color: var(--head); text-decoration: none; font-weight: 800; font-size: 20px; letter-spacing: -0.02em">CodeProva</a>
     <div class="navlinks" style="display: flex; gap: 2px; align-items: center">
+      <a class="navlink" href="#overview">Overview</a>
+      <a class="navlink" href="#verify">Verify</a>
       <a class="navlink" href="#decode">See it read code</a>
-      <a class="navlink" href="#plan">The plan</a>
       <a class="navlink" href="#evidence">Evidence</a>
       <a class="navlink" href="#security">Security</a>
       <a class="navlink" href="#faq">FAQ</a>
@@ -137,14 +140,14 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
     </div>
     <div class="glass" style="border-radius: 30px; padding: 32px 40px; display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: flex-end; justify-content: space-between">
       <div style="flex: 1 1 500px">
-        <p class="eyebrow">Legacy system intelligence for regulated enterprises</p>
+        <p class="eyebrow">The proof layer for legacy modernization</p>
         <h1 class="h1" style="margin: 0; font-size: 52px; line-height: 1.03; font-weight: 800; letter-spacing: -0.04em; color: var(--head)">Modernize COBOL with <span class="hl">proof</span>, not promises.</h1>
       </div>
       <div style="flex: 1 1 340px; max-width: 470px">
-        <p style="margin: 0 0 20px; font-size: 17px; line-height: 1.6; color: var(--muted)">CodeProva maps every dependency, reads the business rules buried in your code, and records every AI decision in an audit trail your risk team can verify. It runs inside your environment.</p>
+        <p style="margin: 0 0 20px; font-size: 17px; line-height: 1.6; color: var(--muted)">Any vendor or AI tool can convert COBOL. CodeProva proves the result: which customers would get a different outcome, by how much, and the line of legacy code that explains why. It runs inside your environment.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 12px">
           <a href="#contact" class="cta" style="padding: 15px 24px; border-radius: 16px">Book a demo</a>
-          <a href="#decode" class="ghost" style="padding: 15px 24px; border-radius: 16px">See it read real code</a>
+          <a href="#overview" class="ghost" style="padding: 15px 24px; border-radius: 16px">▶ Watch the overview</a>
         </div>
       </div>
     </div>
@@ -158,6 +161,52 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
     <p class="mono" style="margin: 0 0 16px; font-size: 12px; color: var(--muted2); text-align: center">READS WHAT YOUR MAINFRAME ACTUALLY RUNS</p>
     <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center">
       <span class="chip">COBOL</span><span class="chip">Copybooks</span><span class="chip">JCL &amp; PROCs</span><span class="chip">CICS</span><span class="chip">DB2 SQL</span><span class="chip">IMS DL/I</span><span class="chip">IBM MQ</span><span class="chip">VSAM</span><span class="chip">CICS CSD</span><span class="chip">DB2 DDL</span>
+    </div>
+  </section>
+
+
+  <!-- ============ VIDEO ============ -->
+  <section id="overview" class="sec" aria-labelledby="v-h" style="padding-top: 100px">
+    <p class="eyebrow">Overview</p>
+    <h2 id="v-h" class="h2">CodeProva in about a minute.</h2>
+    <p class="lead">Why modernization needs proof, and how CodeProva provides it.</p>
+    <div class="glass" style="border-radius: 28px; padding: 10px; overflow: hidden">
+      <video id="overview-video" controls preload="metadata" playsinline poster="media/codeprova-overview-poster.jpg" style="display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; background: #0b0b0b; object-fit: cover">
+        <source src="media/codeprova-overview.mp4" type="video/mp4">
+        Your browser can’t play this video. <a href="media/codeprova-overview.mp4">Download it</a>.
+      </video>
+    </div>
+  </section>
+
+  <!-- ============ VERIFY ============ -->
+  <section id="verify" class="sec" aria-labelledby="vf-h">
+    <p class="eyebrow">Verify any conversion</p>
+    <h2 id="vf-h" class="h2">Prove nothing changed for your customers.</h2>
+    <p class="lead">Compare the legacy and modernized outputs, whoever did the conversion. Thousands of mismatches become a handful of causes, each with the customers affected, the dollars involved and the legacy line that explains it.</p>
+    <div class="glass" style="border-radius: 28px; padding: 32px">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 26px">
+        <div style="border-top: 1px solid var(--line); padding-top: 14px"><p style="margin: 0; font-size: 38px; font-weight: 800; letter-spacing: -0.03em; color: var(--head)">5,000</p><p style="margin: 4px 0 0; font-size: 14px; color: var(--muted)">accounts checked</p></div>
+        <div style="border-top: 1px solid var(--line); padding-top: 14px"><p style="margin: 0; font-size: 38px; font-weight: 800; letter-spacing: -0.03em; color: var(--head)">3,085</p><p style="margin: 4px 0 0; font-size: 14px; color: var(--muted)">would get a different result</p></div>
+        <div style="border-top: 1px solid var(--line); padding-top: 14px"><p style="margin: 0; font-size: 38px; font-weight: 800; letter-spacing: -0.03em; color: var(--head)">4</p><p style="margin: 4px 0 0; font-size: 14px; color: var(--muted)">causes, all explained</p></div>
+        <div style="border-top: 1px solid var(--line); padding-top: 14px"><p style="margin: 0; font-size: 38px; font-weight: 800; letter-spacing: -0.03em; color: var(--head)">&lt; 1 s</p><p style="margin: 4px 0 0; font-size: 14px; color: var(--muted)">to analyse</p></div>
+      </div>
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 15px; min-width: 640px">
+          <thead><tr style="color: var(--muted2); font-size: 12px; text-align: left" class="mono"><th style="padding: 10px 12px; border-bottom: 1px solid var(--line); font-weight: 500">CAUSE</th><th style="padding: 10px 12px; border-bottom: 1px solid var(--line); font-weight: 500; text-align: right">ACCOUNTS</th><th style="padding: 10px 12px; border-bottom: 1px solid var(--line); font-weight: 500; text-align: right">NET IMPACT</th><th style="padding: 10px 12px; border-bottom: 1px solid var(--line); font-weight: 500">LEGACY CODE</th></tr></thead>
+          <tbody>
+            <tr><td style="padding: 14px 12px; border-bottom: 1px solid var(--line); color: var(--head)">Small-business accounts charged 0% instead of the default rate</td><td style="padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: right">448</td><td style="padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: right; color: var(--head)">−$41,304.58</td><td class="mono" style="padding: 14px 12px; border-bottom: 1px solid var(--line); font-size: 13px">CBACT04C.cbl:437</td></tr>
+            <tr><td style="padding: 14px 12px; border-bottom: 1px solid var(--line); color: var(--head)">Negative balances handled differently</td><td style="padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: right">607</td><td style="padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: right; color: var(--head)">+$3,371.73</td><td class="mono" style="padding: 14px 12px; border-bottom: 1px solid var(--line); font-size: 13px">CBACT04C.cbl:464</td></tr>
+            <tr><td style="padding: 14px 12px; border-bottom: 1px solid var(--line); color: var(--head)">One-cent differences: legacy truncates, new system rounds</td><td style="padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: right">2,002</td><td style="padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: right; color: var(--head)">+$20.02</td><td class="mono" style="padding: 14px 12px; border-bottom: 1px solid var(--line); font-size: 13px">CBACT04C.cbl:464</td></tr>
+            <tr><td style="padding: 14px 12px; color: var(--head)">Inactive accounts missing from the new output</td><td style="padding: 14px 12px; text-align: right">28</td><td style="padding: 14px 12px; text-align: right">—</td><td class="mono" style="padding: 14px 12px; font-size: 13px">no status check in legacy</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="glass" style="border-radius: 18px; padding: 18px 20px; margin-top: 22px">
+        <p class="mono" style="margin: 0 0 8px; font-size: 12px; color: var(--muted2)">CBACT04C.cbl:437 · why 448 accounts differ</p>
+        <p class="mono" style="margin: 0 0 10px; font-size: 14px; color: var(--head)">MOVE 'DEFAULT' TO FD-DIS-ACCT-GROUP-ID</p>
+        <p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted)">When an account’s group has no rate, the legacy program falls back to the default rate. The new system charges no interest at all. Every affected account, its dollar difference and a reviewer decision are recorded as evidence.</p>
+      </div>
+      <p style="margin: 20px 0 0; font-size: 13px; color: var(--muted2)">Demo on AWS CardDemo’s interest program with synthetic data and a simulated conversion. <a href="downloads/CodeProva-Verification-Demo.pdf">Download the verification report</a>.</p>
     </div>
   </section>
 
@@ -285,12 +334,12 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
   <section class="sec" aria-labelledby="h-h">
     <p class="eyebrow">How we work</p>
     <h2 id="h-h" class="h2">Start small and fixed-price. Each step earns the next.</h2>
-    <p class="lead">No big-bang rewrite. You see the plan before you commit to any change.</p>
+    <p class="lead">No big-bang rewrite. Use any vendor or AI tool for the conversion; CodeProva specifies the work before and proves it after.</p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px">
-      <div class="glass card" style="border-top: 2px solid var(--c)"><p class="mono" style="margin: 0; font-size: 13px; color: var(--c)">01 · ASSESSMENT</p><h3>A plan you can sign</h3><p>Dependency map, plain-English profiles, rules catalog, risk register and a phased roadmap.</p></div>
-      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">02 · PILOT</p><h3>One module, proven</h3><p>Old and new run on the same data. Every difference is explained or fixed.</p></div>
-      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">03 · PROGRAM</p><h3>Wave by wave</h3><p>The roadmap delivered in stages, with evidence for every change.</p></div>
-      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">04 · PLATFORM</p><h3>Your team runs it</h3><p>License CodeProva and keep modernizing in-house, with our support.</p></div>
+      <div class="glass card" style="border-top: 2px solid var(--c)"><p class="mono" style="margin: 0; font-size: 13px; color: var(--c)">01 · ASSESS</p><h3>A plan you can sign</h3><p>Dependency map, plain-English profiles, rules catalog, risk register and a phased roadmap.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">02 · VERIFY</p><h3>Every conversion, proven</h3><p>Old and new outputs compared. Every difference is grouped, explained in customer terms and signed off.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">03 · WAVE BY WAVE</p><h3>Impact before each change</h3><p>See what each wave touches before it starts, and prove it after it lands.</p></div>
+      <div class="glass card"><p class="mono" style="margin: 0; font-size: 13px; color: var(--soft)">04 · ASSURE</p><h3>Continuous assurance</h3><p>Every later change to a business rule detected, tied to its approval and documented for audit.</p></div>
     </div>
   </section>
 
@@ -298,7 +347,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
   <section id="security" class="sec" aria-labelledby="s-h">
     <p class="eyebrow">Security</p>
     <h2 id="s-h" class="h2">Your code never leaves your walls.</h2>
-    <p class="lead">CodeProva installs into your own Kubernetes cluster with Helm, AKS first. The AI it uses is the Azure OpenAI deployment in your own tenant.</p>
+    <p class="lead">CodeProva installs into your own Kubernetes cluster with Helm. AI explanations use the model deployment in your own tenant, and the core analysis and verification need no AI at all.</p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; align-items: stretch">
       <div style="border: 1.5px dashed var(--c); border-radius: 28px; padding: 24px; position: relative">
         <p class="mono" style="margin: 0 0 18px; font-size: 12px; color: var(--c)">YOUR CLOUD TENANT</p>
@@ -332,7 +381,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
         <p class="eyebrow">Proof on real banking code</p>
         <h2 id="sa-h" class="h2" style="font-size: 38px">We ran CodeProva on AWS CardDemo.</h2>
         <p style="margin: 0 0 24px; font-size: 17px; line-height: 1.65; color: var(--muted)">An open-source card-banking application built to look like a real mainframe estate. Download the full modernization plan it produced.</p>
-        <a href="#" class="cta" style="padding: 16px 26px; border-radius: 16px">Download the sample plan</a>
+        <a href="downloads/CodeProva-CardDemo-Sample-Plan.pdf" class="cta" style="padding: 16px 26px; border-radius: 16px">Download the sample plan</a>
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
         <div style="border-top: 1px solid var(--line); padding-top: 14px"><p style="margin: 0; font-size: 44px; font-weight: 800; letter-spacing: -0.04em; color: var(--head)">44</p><p style="margin: 4px 0 0; font-size: 14px; color: var(--muted)">COBOL programs</p></div>
@@ -353,8 +402,9 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
   <section id="faq" class="sec" aria-labelledby="f-h">
     <p class="eyebrow">Questions</p>
     <h2 id="f-h" class="h2" style="margin-bottom: 36px">What risk and IT teams ask first</h2>
-    <details><summary>Does our code leave our environment?</summary><p>No. CodeProva runs in your Kubernetes cluster, and the only AI it calls is the Azure OpenAI deployment in your own tenant. We can work inside your environment under your access controls.</p></details>
-    <details><summary>What if the AI gets something wrong?</summary><p>Every statement cites the file and line it came from, so a reviewer can check it in seconds. Nothing is final until a named expert signs it off, and converted code is proven by running old and new on the same data.</p></details>
+    <details><summary>Do you convert the code?</summary><p>No, by design. Use whichever vendor, partner or AI tool you prefer for the conversion. CodeProva maps what the legacy system does before you start, and afterwards proves the new system gives every customer the same result, explaining any difference down to the line of legacy code.</p></details>
+    <details><summary>Does our code leave our environment?</summary><p>No. CodeProva runs in your Kubernetes cluster, and the only AI it calls is the model deployment in your own tenant, or none at all. We can work inside your environment under your access controls.</p></details>
+    <details><summary>What if the AI gets something wrong?</summary><p>Every statement cites the file and line it came from, so a reviewer can check it in seconds. Nothing is final until a named expert signs it off, and converted code is proven by comparing old and new outputs on the same data.</p></details>
     <details><summary>Do you need access to our mainframe?</summary><p>No. For the assessment we need an export of the source: programs, copybooks, JCL, CICS definitions and DB2 DDL. Nothing is executed.</p></details>
     <details><summary>What do we get at the end of the assessment?</summary><p>A modernization plan as a PDF and an interactive page: a decision for every program, a phased roadmap, the dependency map, the business rules catalog, a risk register and the evidence ledger behind it all.</p></details>
     <details><summary>How is it priced?</summary><p>The assessment is a fixed price agreed upfront, based on the size of the estate. Pilots and programs are scoped from the plan, so you always know what the next step costs before you commit.</p></details>
@@ -369,7 +419,7 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
         <p style="margin: 0 0 24px; font-size: 17px; line-height: 1.65; color: var(--muted)">Tell us what you run and what you want to change. We’ll reply within one business day, and can run the demo on a sample of your code.</p>
         <p style="margin: 0; font-size: 15px; color: var(--muted)">Prefer email? <a href="mailto:hello@codeprova.com">hello@codeprova.com</a></p>
       </div>
-      <form style="display: grid; gap: 16px" aria-label="Contact CodeProva">
+      <form id="contact-form" style="display: grid; gap: 16px" aria-label="Contact CodeProva">
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px">
           <div style="display: grid; gap: 8px"><label for="c-name" style="font-size: 14px; color: var(--muted)">Name</label><input id="c-name" class="field" type="text" autocomplete="name"></div>
           <div style="display: grid; gap: 8px"><label for="c-email" style="font-size: 14px; color: var(--muted)">Work email</label><input id="c-email" class="field" type="email" autocomplete="email"></div>
@@ -379,15 +429,16 @@ summary:focus-visible{outline:2px solid var(--c);outline-offset:4px;border-radiu
           <div style="display: grid; gap: 8px"><label for="c-size" style="font-size: 14px; color: var(--muted)">Estate size</label><select id="c-size" class="field"><option>Not sure yet</option><option>Under 100 programs</option><option>100 to 1,000 programs</option><option>Over 1,000 programs</option></select></div>
         </div>
         <div style="display: grid; gap: 8px"><label for="c-msg" style="font-size: 14px; color: var(--muted)">What are you modernizing?</label><textarea id="c-msg" class="field" rows="4" placeholder="Platform, business area, timeline…"></textarea></div>
-        <button type="button" class="cta" style="justify-self: start; font: inherit; font-weight: 700; font-size: 16px; border-radius: 16px; padding: 15px 26px">Send message</button>
+        <button type="submit" class="cta" style="justify-self: start; font: inherit; font-weight: 700; font-size: 16px; border-radius: 16px; padding: 15px 26px">Send message</button>
+        <p style="margin: 0; font-size: 13px; color: var(--muted2)">Opens your email app with the message ready to send.</p>
       </form>
     </div>
   </section>
 </div>
 
 <footer style="border-top: 1px solid var(--line); padding: 28px 24px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; max-width: 1180px; margin: 0 auto; font-size: 14px; color: var(--muted2)">
-  <span><strong style="color: var(--head)">CodeProva</strong> · Evidence-backed legacy modernization</span>
-  <span class="mono" style="font-size: 12px">Explainable · Testable · Auditable</span>
+  <span><strong style="color: var(--head)">CodeProva</strong> · The proof layer for legacy modernization · <a href="mailto:hello@codeprova.com" style="color: var(--muted)">hello@codeprova.com</a></span>
+  <span class="mono" style="font-size: 12px">Map · Verify · Assure</span>
 </footer>
 </div>
 <script>
@@ -869,6 +920,15 @@ class Component extends DCLogic {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
 
+
+document.getElementById('contact-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var v = function (id) { return (document.getElementById(id).value || '').trim(); };
+  var body = 'Name: ' + v('c-name') + '\nEmail: ' + v('c-email') + '\nCompany: ' + v('c-co') +
+             '\nEstate size: ' + v('c-size') + '\n\n' + v('c-msg');
+  location.href = 'mailto:hello@codeprova.com?subject=' + encodeURIComponent('CodeProva demo request' + (v('c-co') ? ' - ' + v('c-co') : '')) +
+                  '&body=' + encodeURIComponent(body);
+});
 </script>
 </body>
 </html>
