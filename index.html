@@ -448,16 +448,17 @@ img,video{max-width:100%;height:auto}
         <p style="margin: 0 0 24px; font-size: 17px; line-height: 1.65; color: var(--muted)">Tell us what you run and what you want to change. We’ll reply within one business day, and can run the demo on a sample of your code.</p>
         <p style="margin: 0; font-size: 15px; color: var(--muted)">Prefer email? <a href="mailto:admin@codeprova.com">admin@codeprova.com</a></p>
       </div>
-      <form id="contact-form" style="display: grid; gap: 16px" aria-label="Contact CodeProva">
+      <form id="contact-form" action="https://formsubmit.co/admin@codeprova.com" method="POST" style="display: grid; gap: 16px" aria-label="Contact CodeProva">
+        <input type="hidden" name="_subject" value="CodeProva demo request"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_cc" value="misbahuddin110399@gmail.com"><input type="hidden" name="_next" value="https://codeprova.com/#contact">
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px">
-          <div style="display: grid; gap: 8px"><label for="c-name" style="font-size: 14px; color: var(--muted)">Name</label><input id="c-name" name="c-name" class="field" required type="text" autocomplete="name"></div>
-          <div style="display: grid; gap: 8px"><label for="c-email" style="font-size: 14px; color: var(--muted)">Work email</label><input id="c-email" name="c-email" class="field" required type="email" autocomplete="email"></div>
+          <div style="display: grid; gap: 8px"><label for="c-name" style="font-size: 14px; color: var(--muted)">Name</label><input id="c-name" name="name" class="field" required type="text" autocomplete="name"></div>
+          <div style="display: grid; gap: 8px"><label for="c-email" style="font-size: 14px; color: var(--muted)">Work email</label><input id="c-email" name="email" class="field" required type="email" autocomplete="email"></div>
         </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px">
-          <div style="display: grid; gap: 8px"><label for="c-co" style="font-size: 14px; color: var(--muted)">Company</label><input id="c-co" class="field" type="text" autocomplete="organization"></div>
-          <div style="display: grid; gap: 8px"><label for="c-size" style="font-size: 14px; color: var(--muted)">Estate size</label><select id="c-size" class="field"><option>Not sure yet</option><option>Under 100 programs</option><option>100 to 1,000 programs</option><option>Over 1,000 programs</option></select></div>
+          <div style="display: grid; gap: 8px"><label for="c-co" style="font-size: 14px; color: var(--muted)">Company</label><input id="c-co" name="company" class="field" type="text" autocomplete="organization"></div>
+          <div style="display: grid; gap: 8px"><label for="c-size" style="font-size: 14px; color: var(--muted)">Estate size</label><select id="c-size" name="estate_size" class="field"><option>Not sure yet</option><option>Under 100 programs</option><option>100 to 1,000 programs</option><option>Over 1,000 programs</option></select></div>
         </div>
-        <div style="display: grid; gap: 8px"><label for="c-msg" style="font-size: 14px; color: var(--muted)">What are you modernizing?</label><textarea id="c-msg" name="c-msg" class="field" required rows="4" placeholder="Platform, business area, timeline…"></textarea></div>
+        <div style="display: grid; gap: 8px"><label for="c-msg" style="font-size: 14px; color: var(--muted)">What are you modernizing?</label><textarea id="c-msg" name="message" class="field" required rows="4" placeholder="Platform, business area, timeline…"></textarea></div>
         <button type="submit" class="cta" style="justify-self: start; font: inherit; font-weight: 700; font-size: 16px; border-radius: 16px; padding: 15px 26px">Send message</button>
         <p id="form-status" role="status" aria-live="polite"></p>
         <p style="margin: 0; font-size: 13px; color: var(--muted2)">Your message comes straight to our inbox. We reply within one business day.</p>
@@ -975,9 +976,11 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
   }).then(function (r) { return r.json(); }).then(function (d) {
     if (String(d.success) !== 'true') { if (window.console) console.log('FormSubmit:', d); throw new Error(d.message || 'failed'); }
     form.reset(); st.className = 'ok'; st.textContent = 'Thanks, your message was sent. We will be in touch shortly.';
-  }).catch(function () {
+  }).catch(function (err) {
+    if (!form.dataset.fallback) { form.dataset.fallback = '1'; HTMLFormElement.prototype.submit.call(form); return; }
     st.className = 'err';
-    st.innerHTML = 'Sorry, that did not go through. Please email us at <a href="mailto:admin@codeprova.com">admin@codeprova.com</a>.';
+    var why = (err && err.message && err.message !== 'failed') ? ' (' + err.message.replace(/[<>]/g, '') + ')' : '';
+    st.innerHTML = 'Sorry, that did not go through' + why + '. Please email us at <a href="mailto:admin@codeprova.com">admin@codeprova.com</a>.';
   }).finally(function () { btn.disabled = false; btn.textContent = 'Send message'; });
 });
 </script>
